@@ -2,9 +2,10 @@
 
 import os, sys
 import Compiler as CA
+import MySQLdb
 
-PATH_TO_OBS_COMPILER = '~/Desktop/radar/RADAR_tat/'
-PATH_TO_FAST_DOWNWARD = '~/Desktop/FastDownward/src/'
+PATH_TO_OBS_COMPILER = '~/Documents/Radar/Radar/RADAR_tat/'
+PATH_TO_FAST_DOWNWARD = '~/Documents/FD/src/'
 
 class fdCompile(CA.Compiler):
     
@@ -17,44 +18,69 @@ class fdCompile(CA.Compiler):
         # Plans recomputed everytime operator or fact file is update #
         # Call returnPlan() method to get the plan without associated garbage #
 
-        tempObs = ""
-        obsList = [] # get from database 
-        for obs in obsList:
-            tempObs += obs + '\n'
-        # uncomment this
-        #with open(self.obsFile,'w') as masterObs:
-        #    masterObs.write(tempObs) 
+	db = MySQLdb.connect("localhost","root","root","radar")
+	cursor = db.cursor()
 
-        tempProblem  = "(define (problem BYENG) (:domain RADAR)\n\n(:objects"
-        objectList   = [] # get from database
-        for obj in objectList:
-            # depends on how you are storing objects and their types
-            # possibly table with type and corresponding objects 
-            # so do .join over all objects and add - type
-            tempProblem += obj 
+        tempObs = ""
+        cursor.execute('select plan_desc from plans')
+        obsList = cursor.fetchall()
+        for obs in obsList:
+            tempObs += obs[0] + '\n'
+        
+        with open(self.obsFile,'w') as masterObs:
+            masterObs.write(tempObs) 
+
+        tempProblem  = "(define (problem BYENG) (:domain RADAR)\n\n(:objects \n"
+	
+	#Objects in problem.pddl
+        cursor.execute('select * from object_type')
+	object_type = cursor.fetchall()
+	for i in object_type:
+	    cursor.execute('select object_name from objects where type ='+ str(i[0]))
+	    objects = cursor.fetchall()
+            for o in objects:
+		tempProblem += ' ' + o[0]
+   	    tempProblem += ' - ' + i[1]	+ '\n'
+	
+	#initialization Statement       
         tempProblem += "\n)\n\n(:init\n"
-        initStateList = [] # get from database
+	
+	#The initial task
+	cursor.execute('select * from tasks')        
+	initStateList = cursor.fetchall()
         for predicate in initStateList:
-            tempProblem += '(' + predicate + ')\n'
+            tempProblem += '(' + predicate[0] + ')\n'
         tempProblem += '\n(=(total-cost) 0.0)\n\n'
-        dataList = [] # get from database
-        for data in dataList:
-            # data is fluent-value tuple
-            tempProblem += '(=(' + data[0] + ') ' + data[1] + ')\n'
-        durationList = [] # get from database
+
+	#The given data or resources
+	query = 'select * from fire_stations'
+  	query_for_predicates = 'select * from predicates_for_fireStation'        
+	tempProblem = self.resourceAvailable(query, query_for_predicates, cursor, tempProblem)
+
+	query = 'select * from hospitals'
+  	query_for_predicates = 'select * from predicates_for_hospital'        
+	tempProblem = self.resourceAvailable(query, query_for_predicates, cursor, tempProblem)
+
+	query = 'select * from police_stations'
+  	query_for_predicates = 'select * from predicates_for_policeStation'        
+	tempProblem = self.resourceAvailable(query, query_for_predicates, cursor, tempProblem)
+
+	cursor.execute('select * from durations')
+        durationList = cursor.fetchall()
         for duration in durationList:
             # data is fluent-value tuple
-            tempProblem += '(=(' + duration[0] + ') ' + duration[1] + ')\n'
+            tempProblem += '(=(' + duration[0] + ') ' + str(duration[1]) + ')\n'
         tempProblem += '\n)\n\n(:goal\n(and\n'
-        goalList = [] # get from database
+
+	cursor.execute('select * from subgoals')
+        goalList = cursor.fetchall()
         for goal in goalList:
-            tempProblem += '(' + goal + ')\n'
+            tempProblem += '(' + goal[0] + ')\n'
         tempProblem += '))\n'
         tempProblem += '\n(:metric minimize (total-cost))\n\n)\n'
         
-        # uncomment this
-        #with open(self.problemFile,'w') as masterProblem:
-        #    masterProblem.write(tempProblem)
+        with open(self.problemFile,'w') as masterProblem:
+            masterProblem.write(tempProblem)
 
         self.__compileObservations__()
         self.__runPlanner__()
@@ -85,23 +111,35 @@ class fdCompile(CA.Compiler):
         try:
             self.plan = ""
             with open('sas_plan','r') as planFile:
-                for line in planFile:
-                    if 'cost' not in line:
-                        if 'explain' not in line:
-                            self.plan += line.split(')')[0].split('(')[1] + '\n'
-                        else:
-                            self.plan += '_'.join(line.split('_')[1:-1]) + '\n'                            
-                self.plan = self.plan.strip()
+            	for line in planFile:
+                	if 'cost' not in line:
+                	    if 'explain' not in line:
+                	        self.plan += line.split(')')[0].split('(')[1] + '\n'
+                	else:
+                	    self.plan += '_'.join(line.split('_')[1:-1]) + '\n'                            
+	                self.plan = self.plan.strip()
         except:
             raise Exception('Plan file not found - looking for <sas_plan> !')
+
+    def resourceAvailable(self, query, query_for_predicates, cursor, tempProblem):
+	cursor.execute(query)
+	data = cursor.fetchall()
+	cursor.execute(query_for_predicates)
+        pred = cursor.fetchall()
+	for i in data:
+            length = len(i)
+	    for j in range(1, length):
+	    	pre = [p[1] for p in pred if p[0] == j]
+	    	tempProblem += '(=('+ pre[0] +' '+ i[0] +') ' + str(i[j]) + ')\n'
+        return tempProblem
 
 
 if __name__ == '__main__':
     
     if len(sys.argv) == 1:
         domainFile  = 'domain.pddl'
-        problemFile = 'template.pddl'
-        obsFile     = 'obs.dat'
+        problemFile = 'template1.pddl'
+        obsFile     = 'obs1.dat'
     else:
         try:
             domainFile  = sys.argv[1]
