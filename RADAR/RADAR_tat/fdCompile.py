@@ -76,6 +76,8 @@ class fdCompile(CA.Compiler):
         goalList = cursor.fetchall()
         for goal in goalList:
             tempProblem += '(' + goal[0] + ')\n'
+
+	tempProblem += self.addNotNeeded(tempProblem, cursor)
         tempProblem += '))\n'
         tempProblem += '\n(:metric minimize (total-cost))\n\n)\n'
         
@@ -133,6 +135,21 @@ class fdCompile(CA.Compiler):
 	    	tempProblem += '(=('+ pre[0] +' '+ i[0] +') ' + str(i[j]) + ')\n'
         return tempProblem
 
+    def addNotNeeded(self, tempProblem, cursor):
+	cursor.execute('select object_name from objects where type = 8')
+	pois = cursor.fetchall()
+        cursor.execute('select object_name from objects where type in (1,2,3,4)')
+	actors = cursor.fetchall()
+	for i in pois:
+	    tempProblem += '( not ( needed_barricade ' + i[0] + ' ))\n'
+	    tempProblem += '( not ( needed_search_casualties ' + i[0] + ' ))\n'
+	    tempProblem += '( not ( needed_attend_casualties ' + i[0] + ' ))\n'
+	    for j in pois:
+		tempProblem += '( not ( needed_diverted_traffic ' + i[0] + ' '+ j[0] +'))\n'
+        for i in actors:
+	    tempProblem += '( not ( needed_active_local_alert ' + i[0] + ' ))\n'
+        tempProblem += '(not ( needed_address_media ))\n'
+        return tempProblem
 
 if __name__ == '__main__':
     
