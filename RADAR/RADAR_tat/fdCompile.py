@@ -77,7 +77,7 @@ class fdCompile(CA.Compiler):
         for goal in goalList:
             tempProblem += '(' + goal[0] + ')\n'
 
-	tempProblem += self.addNotNeeded(tempProblem, cursor)
+	tempProblem = self.addNotNeeded(tempProblem, cursor)
         tempProblem += '))\n'
         tempProblem += '\n(:metric minimize (total-cost))\n\n)\n'
         
@@ -103,7 +103,7 @@ class fdCompile(CA.Compiler):
             os.system(cmd)
             cmd = PATH_TO_FAST_DOWNWARD + 'preprocess/preprocess < output.sas > ' + self.logFile
             os.system(cmd)
-            cmd = PATH_TO_FAST_DOWNWARD + "fast-downward.py output --search 'astar(lmcut())' > " + self.logFile
+            cmd = PATH_TO_FAST_DOWNWARD + 'fast-downward.py output --landmarks "lm_zg()" --search "astar(lmcut())"> ' + self.logFile
             os.system(cmd)
             print 'FAST-DOWNWARD called...'
         except:
@@ -151,6 +151,28 @@ class fdCompile(CA.Compiler):
         tempProblem += '(not ( needed_address_media ))\n'
         return tempProblem
 
+    def addlandmarks(self):
+	db = MySQLdb.connect("localhost","root","root","radar")
+	cursor = db.cursor()
+	landmarks = open('example.txt', 'r')
+	land=[]
+        landEdge = ((landmarks.read()).split('\n'))
+        landEdge = landEdge[0: (len(landEdge) - 1)]
+	for i in landEdge:
+	    land.append(i.split(' '))
+        l = []
+        for i in land:
+            l.append(int(i[0]))
+        l = list(set(l))
+	try:
+	    for i in l:
+	    	cursor.execute('insert into landmarks values('+str(i)+')')
+            db.commit()
+	except:
+	    db.rollback()
+	landmarks.close()
+	    
+
 if __name__ == '__main__':
     
     if len(sys.argv) == 1:
@@ -167,4 +189,6 @@ if __name__ == '__main__':
 
     fdCompiler = fdCompile(domainFile, problemFile, obsFile)
     fdCompiler.updateFiles()
+    fdCompiler.addlandmarks()
     print '\nFinal Plan >>\n' + fdCompiler.returnPlan()
+

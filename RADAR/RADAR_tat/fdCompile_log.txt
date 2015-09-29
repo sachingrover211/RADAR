@@ -1,6 +1,6 @@
 INFO     Running search.
 INFO     search input: output
-INFO     search arguments: ['--search', 'astar(lmcut())']
+INFO     search arguments: ['--landmarks', 'lm_zg()', '--search', 'astar(lmcut())']
 INFO     search time_limit: None
 INFO     search memory limit: None
 INFO     search executable: /home/vdondeti/Documents/FD/src/search/downward-release
@@ -13,43 +13,49 @@ Facts: 54
 Bytes per state: 4
 Building successor generator...done! [t=0.00s]
 done initalizing global data [t=0.00s]
+Initializing Exploration...
+Generating landmarks using Zhu/Givan label propagation
+Removed 0 reasonable or obedient reasonable orders
+Landmarks generation time: 0.00s
+Discovered 10 landmarks, of which 0 are disjunctive and 0 are conjunctive 
+17 edges
 Conducting best first search with reopening closed nodes, (real) bound = 2147483647
 Initializing landmark cut heuristic...
 New best heuristic value for lmcut: 21
-[g=0, 1 evaluated, 0 expanded, t=0.00s, 3172 KB]
-f = 21 [1 evaluated, 0 expanded, t=0.00s, 3172 KB]
+[g=0, 1 evaluated, 0 expanded, t=0.00s, 3192 KB]
+f = 21 [1 evaluated, 0 expanded, t=0.00s, 3192 KB]
 Initial heuristic value for lmcut: 21
 New best heuristic value for lmcut: 20
-[g=1, 2 evaluated, 1 expanded, t=0.00s, 3172 KB]
+[g=1, 2 evaluated, 1 expanded, t=0.00s, 3192 KB]
 New best heuristic value for lmcut: 19
-[g=2, 23 evaluated, 2 expanded, t=0.00s, 3172 KB]
+[g=2, 23 evaluated, 2 expanded, t=0.00s, 3192 KB]
 New best heuristic value for lmcut: 17
-[g=5, 25 evaluated, 2 expanded, t=0.00s, 3172 KB]
+[g=5, 25 evaluated, 2 expanded, t=0.00s, 3192 KB]
 New best heuristic value for lmcut: 16
-[g=6, 43 evaluated, 3 expanded, t=0.00s, 3172 KB]
-f = 22 [120 evaluated, 12 expanded, t=0.00s, 3172 KB]
+[g=6, 43 evaluated, 3 expanded, t=0.00s, 3192 KB]
+f = 22 [120 evaluated, 12 expanded, t=0.00s, 3192 KB]
 New best heuristic value for lmcut: 15
-[g=7, 121 evaluated, 13 expanded, t=0.00s, 3172 KB]
+[g=7, 121 evaluated, 13 expanded, t=0.00s, 3192 KB]
 New best heuristic value for lmcut: 13
-[g=10, 147 evaluated, 14 expanded, t=0.00s, 3172 KB]
+[g=10, 147 evaluated, 14 expanded, t=0.00s, 3192 KB]
 New best heuristic value for lmcut: 12
-[g=11, 165 evaluated, 15 expanded, t=0.00s, 3172 KB]
-f = 23 [1110 evaluated, 164 expanded, t=0.02s, 3172 KB]
+[g=11, 165 evaluated, 15 expanded, t=0.00s, 3192 KB]
+f = 23 [1110 evaluated, 164 expanded, t=0.03s, 3192 KB]
 New best heuristic value for lmcut: 11
-[g=12, 1111 evaluated, 165 expanded, t=0.02s, 3172 KB]
+[g=12, 1111 evaluated, 165 expanded, t=0.03s, 3192 KB]
 New best heuristic value for lmcut: 9
-[g=15, 1136 evaluated, 166 expanded, t=0.02s, 3172 KB]
-f = 24 [5416 evaluated, 1052 expanded, t=0.13s, 3436 KB]
+[g=15, 1136 evaluated, 166 expanded, t=0.03s, 3192 KB]
+f = 24 [5416 evaluated, 1052 expanded, t=0.14s, 3464 KB]
 New best heuristic value for lmcut: 8
-[g=16, 5417 evaluated, 1053 expanded, t=0.13s, 3436 KB]
+[g=16, 5417 evaluated, 1053 expanded, t=0.14s, 3464 KB]
 New best heuristic value for lmcut: 5
-[g=19, 5442 evaluated, 1054 expanded, t=0.13s, 3436 KB]
+[g=19, 5442 evaluated, 1054 expanded, t=0.14s, 3464 KB]
 New best heuristic value for lmcut: 2
-[g=22, 5454 evaluated, 1055 expanded, t=0.13s, 3436 KB]
+[g=22, 5454 evaluated, 1055 expanded, t=0.14s, 3464 KB]
 New best heuristic value for lmcut: 0
-[g=24, 5466 evaluated, 1056 expanded, t=0.13s, 3436 KB]
+[g=24, 5466 evaluated, 1056 expanded, t=0.14s, 3464 KB]
 Solution found!
-Actual search time: 0.13s [t=0.13s]
+Actual search time: 0.14s [t=0.14s]
 alert_firechief_adminfire  (1)
 contact_media_policechief  (1)
 deploy_big_engines_firechief_adminfire_byeng  (4)
@@ -75,7 +81,7 @@ Reopened until last jump: 0 state(s).
 Evaluated until last jump: 5416 state(s).
 Generated until last jump: 70572 state(s).
 Number of registered states: 5466
-Search time: 0.13s
-Total time: 0.13s
+Search time: 0.14s
+Total time: 0.14s
 Solution found.
-Peak memory: 3436 KB
+Peak memory: 3464 KB
