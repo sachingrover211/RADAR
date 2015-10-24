@@ -50,7 +50,10 @@ class fdCompile(CA.Compiler):
 	initStateList = cursor.fetchall()
         for predicate in initStateList:
             tempProblem += '(' + predicate[0] + ')\n'
+
         tempProblem += '\n(=(total-cost) 0.0)\n\n'
+
+	tempProblem = self.addNotNeeded(tempProblem, cursor)
 
 	#The given data or resources
 	query = 'select * from fire_stations'
@@ -84,9 +87,9 @@ class fdCompile(CA.Compiler):
         with open(self.problemFile,'w') as masterProblem:
             masterProblem.write(tempProblem)
 
-        self.__compileObservations__()
+        #self.__compileObservations__()
         self.__runPlanner__()
-        self.__extractPlan__()
+        #self.__extractPlan__()
 
 
     def __compileObservations__(self):
@@ -99,11 +102,11 @@ class fdCompile(CA.Compiler):
             
     def __runPlanner__(self):
         try:
-            cmd = PATH_TO_FAST_DOWNWARD + 'translate/translate.py pr-domain.pddl pr-problem.pddl > ' + self.logFile
+            cmd = PATH_TO_FAST_DOWNWARD + 'translate/translate.py '+ self.domainFile +' '+ self.problemFile + ' > ' + self.logFile
             os.system(cmd)
             cmd = PATH_TO_FAST_DOWNWARD + 'preprocess/preprocess < output.sas > ' + self.logFile
             os.system(cmd)
-            cmd = PATH_TO_FAST_DOWNWARD + 'fast-downward.py output --landmarks "lm_zg()" --search "astar(lmcut())"> ' + self.logFile
+            cmd = PATH_TO_FAST_DOWNWARD + 'fast-downward.py output --landmarks "lm_hm()" > ' + self.logFile
             os.system(cmd)
             print 'FAST-DOWNWARD called...'
         except:
@@ -132,8 +135,10 @@ class fdCompile(CA.Compiler):
             length = len(i)
 	    for j in range(1, length):
 	    	pre = [p[1] for p in pred if p[0] == j]
-	    	tempProblem += '(=('+ pre[0] +' '+ i[0] +') ' + str(i[j]) + ')\n'
+		if(i[j] > 0):
+	    	    tempProblem += '('+ pre[0] +' '+ i[0] +')\n'
         return tempProblem
+	
 
     def addNotNeeded(self, tempProblem, cursor):
 	cursor.execute('select object_name from objects where type = 8')
@@ -141,37 +146,72 @@ class fdCompile(CA.Compiler):
         cursor.execute('select object_name from objects where type in (1,2,3,4)')
 	actors = cursor.fetchall()
 	for i in pois:
-	    tempProblem += '( not ( needed_barricade ' + i[0] + ' ))\n'
-	    tempProblem += '( not ( needed_search_casualties ' + i[0] + ' ))\n'
-	    tempProblem += '( not ( needed_attend_casualties ' + i[0] + ' ))\n'
+	    tempProblem += '( not_needed_barricade ' + i[0] + ' )\n'
+	    tempProblem += '( not_needed_search_casualties ' + i[0] + ' )\n'
+	    tempProblem += '( not_needed_attend_casualties ' + i[0] + ' )\n'
 	    for j in pois:
-		tempProblem += '( not ( needed_diverted_traffic ' + i[0] + ' '+ j[0] +'))\n'
+		tempProblem += '( not_needed_diverted_traffic ' + i[0] + ' '+ j[0] +')\n'
         for i in actors:
-	    tempProblem += '( not ( needed_active_local_alert ' + i[0] + ' ))\n'
-        tempProblem += '(not ( needed_address_media ))\n'
+	    tempProblem += '( not_needed_active_local_alert ' + i[0] + ' )\n'
+        tempProblem += '(not_needed_address_media )\n'
         return tempProblem
 
     def addlandmarks(self):
+        #resourceIdPair = {'helicopter': 1, 'bulldozers': 2, 'big_engine': 3, 'rescuer':4 }
+	resourceIdPair = {}
 	db = MySQLdb.connect("localhost","root","root","radar")
 	cursor = db.cursor()
-	landmarks = open('example.txt', 'r')
-	land=[]
-        landEdge = ((landmarks.read()).split('\n'))
-        landEdge = landEdge[0: (len(landEdge) - 1)]
-	for i in landEdge:
-	    land.append(i.split(' '))
-        l = []
-        for i in land:
-            l.append(int(i[0]))
-        l = list(set(l))
+	cursor.execute('delete from landmarks')
+	cursor.execute('select * from predicate_resource')
+	resourceIdTemp = cursor.fetchall()
+	for r in resourceIdTemp:
+	    resourceIdPair[r[1]] = int(r[0])
+	#resource = resourceIdPair.keys()
+	res = cursor.fetchall()
+	landmarksFile = open('landmark.txt', 'r')
+	land = []
+	landmarks = (landmarksFile.read()).split('\n')
+	duplicate=[]
+	for landmark in landmarks:
+	    land.append(landmark.split(' '))
 	try:
-	    for i in l:
-	    	cursor.execute('insert into landmarks values('+str(i)+')')
-            db.commit()
+            for l in land:
+		if l[0] != '':
+		    if( "deployed" in l[2]):
+			for i in resourceIdPair:
+			    if(i in l[2]):
+				if resourceIdPair[i] not in duplicate:
+  		                    cursor.execute("insert into landmarks values(" + str(resourceIdPair[i]) +",'" + l[2] + "')")
+				    duplicate.append(resourceIdPair[i])
+	    db.commit()
 	except:
+	    print "failed \n"
 	    db.rollback()
-	landmarks.close()
-	    
+	landmarksFile.close()	    
+	
+    def alert(self):
+	db = MySQLdb.connect("localhost","root","root","radar")
+	cursor = db.cursor()
+	cursor.execute('delete from alert')
+	cursor.execute('select id from landmarks')
+ 	landmarks = cursor.fetchall()
+	for i in landmarks:
+	    try:
+		cursor.execute('select resource_type from predicate_resource where id = '+ str(i[0]))
+		resource = (cursor.fetchone())[0]
+		cursor.execute('select ' + resource + ' from fire_stations_actual')
+		fire_stations = cursor.fetchall()
+		for i in fire_stations:
+		    if(int((i)[0]) == 1):
+			continue
+		    else:
+			cursor.execute("insert into alert values('"+resource+"')")
+		        print 'You need '+ resource+' before you can complete the task'
+			break
+	    except:
+		print 'failed'
+	db.commit()	
+    
 
 if __name__ == '__main__':
     
@@ -190,5 +230,30 @@ if __name__ == '__main__':
     fdCompiler = fdCompile(domainFile, problemFile, obsFile)
     fdCompiler.updateFiles()
     fdCompiler.addlandmarks()
-    print '\nFinal Plan >>\n' + fdCompiler.returnPlan()
+    fdCompiler.alert()
+    #print '\nFinal Plan >>\n' + fdCompiler.returnPlan()
+
+'''    def addlandmarks(self):
+	db = MySQLdb.connect("localhost","root","root","radar")
+	cursor = db.cursor()
+	cursor.execute('delete from landmarks')
+	db.commit()
+	landmarks = open('example.txt', 'r')
+	land=[]
+        landEdge = ((landmarks.read()).split('\n'))
+        landEdge = landEdge[0: (len(landEdge) - 1)]
+	for i in landEdge:
+	    land.append(i.split(' '))
+        l = []
+        for i in land:
+            l.append(int(i[0]))
+        l = list(set(l))
+	try:
+	    for i in l:
+	    	cursor.execute('insert into landmarks values('+str(i)+')')
+            db.commit()
+	except:
+	    db.rollback()
+	landmarks.close()
+'''
 
