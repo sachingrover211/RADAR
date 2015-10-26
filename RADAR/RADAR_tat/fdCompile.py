@@ -4,13 +4,15 @@ import os, sys
 import Compiler as CA
 import MySQLdb
 
-PATH_TO_OBS_COMPILER = '~/Documents/Radar/Radar/RADAR_tat/'
-PATH_TO_FAST_DOWNWARD = '~/Documents/FD/src/'
+PATH_TO_OBS_COMPILER = '/home/vdondeti/Documents/RADAR/RADAR/RADAR_tat/'
+PATH_TO_FAST_DOWNWARD = '/home/vdondeti/Documents/FD/src/'
 
 class fdCompile(CA.Compiler):
     
     def __init__(self, domainFile, problemFile, obsFile, flag = False):
         CA.Compiler.__init__(self, domainFile, problemFile, obsFile, flag)
+	self.db = MySQLdb.connect('localhost','root','root','radar')
+	self.cursor = self.db.cursor()
 
     def updateFiles(self):
         # This is where you need to update the files from the database #
@@ -18,12 +20,9 @@ class fdCompile(CA.Compiler):
         # Plans recomputed everytime operator or fact file is update #
         # Call returnPlan() method to get the plan without associated garbage #
 
-	db = MySQLdb.connect("localhost","root","root","radar")
-	cursor = db.cursor()
-
         tempObs = ""
-        cursor.execute('select plan_desc from plans')
-        obsList = cursor.fetchall()
+        self.cursor.execute('select plan_desc from plans')
+        obsList = self.cursor.fetchall()
         for obs in obsList:
             tempObs += obs[0] + '\n'
         
@@ -33,11 +32,11 @@ class fdCompile(CA.Compiler):
         tempProblem  = "(define (problem BYENG) (:domain RADAR)\n\n(:objects \n"
 	
 	#Objects in problem.pddl
-        cursor.execute('select * from object_type')
-	object_type = cursor.fetchall()
+        self.cursor.execute('select * from object_type')
+	object_type = self.cursor.fetchall()
 	for i in object_type:
-	    cursor.execute('select object_name from objects where type ='+ str(i[0]))
-	    objects = cursor.fetchall()
+	    self.cursor.execute('select object_name from objects where type ='+ str(i[0]))
+	    objects = self.cursor.fetchall()
             for o in objects:
 		tempProblem += ' ' + o[0]
    	    tempProblem += ' - ' + i[1]	+ '\n'
@@ -46,41 +45,41 @@ class fdCompile(CA.Compiler):
         tempProblem += "\n)\n\n(:init\n"
 	
 	#The initial task
-	cursor.execute('select * from tasks')        
-	initStateList = cursor.fetchall()
+	self.cursor.execute('select * from tasks')        
+	initStateList = self.cursor.fetchall()
         for predicate in initStateList:
             tempProblem += '(' + predicate[0] + ')\n'
 
         tempProblem += '\n(=(total-cost) 0.0)\n\n'
 
-	tempProblem = self.addNotNeeded(tempProblem, cursor)
+	tempProblem = self.addNotNeeded(tempProblem, self.cursor)
 
 	#The given data or resources
 	query = 'select * from fire_stations_actual'
   	query_for_predicates = 'select * from predicates_for_fireStation'        
-	tempProblem = self.resourceAvailable(query, query_for_predicates, cursor, tempProblem)
+	tempProblem = self.resourceAvailable(query, query_for_predicates, self.cursor, tempProblem)
 
 	query = 'select * from hospitals'
   	query_for_predicates = 'select * from predicates_for_hospital'        
-	tempProblem = self.resourceAvailable(query, query_for_predicates, cursor, tempProblem)
+	tempProblem = self.resourceAvailable(query, query_for_predicates, self.cursor, tempProblem)
 
 	query = 'select * from police_stations'
   	query_for_predicates = 'select * from predicates_for_policeStation'        
-	tempProblem = self.resourceAvailable(query, query_for_predicates, cursor, tempProblem)
+	tempProblem = self.resourceAvailable(query, query_for_predicates, self.cursor, tempProblem)
 
-	cursor.execute('select * from durations')
-        durationList = cursor.fetchall()
+	self.cursor.execute('select * from durations')
+        durationList = self.cursor.fetchall()
         for duration in durationList:
             # data is fluent-value tuple
             tempProblem += '(=(' + duration[0] + ') ' + str(duration[1]) + ')\n'
         tempProblem += '\n)\n\n(:goal\n(and\n'
 
-	cursor.execute('select * from subgoals')
-        goalList = cursor.fetchall()
+	self.cursor.execute('select * from subgoals')
+        goalList = self.cursor.fetchall()
         for goal in goalList:
             tempProblem += '(' + goal[0] + ')\n'
 
-	tempProblem = self.addNotNeeded(tempProblem, cursor)
+	tempProblem = self.addNotNeeded(tempProblem, self.cursor)
         tempProblem += '))\n'
         tempProblem += '\n(:metric minimize (total-cost))\n\n)\n'
         
@@ -106,7 +105,7 @@ class fdCompile(CA.Compiler):
             os.system(cmd)
             cmd = PATH_TO_FAST_DOWNWARD + 'preprocess/preprocess < output.sas > ' + self.logFile
             os.system(cmd)
-            cmd = PATH_TO_FAST_DOWNWARD + 'fast-downward.py output --landmarks "lm_hm()" > ' + self.logFile
+            cmd = PATH_TO_FAST_DOWNWARD + 'fast-downward.py output --landmarks "lm_exhaust()" > ' + self.logFile
             os.system(cmd)
             print 'FAST-DOWNWARD called...'
         except:
@@ -146,7 +145,7 @@ class fdCompile(CA.Compiler):
         cursor.execute('select object_name from objects where type in (1,2,3,4)')
 	actors = cursor.fetchall()
 	for i in pois:
-	    tempProblem += '( not_needed_barricade ' + i[0] + ' )\n'
+	    #tempProblem += '( not_needed_barricade ' + i[0] + ' )\n'
 	    tempProblem += '( not_needed_search_casualties ' + i[0] + ' )\n'
 	    tempProblem += '( not_needed_attend_casualties ' + i[0] + ' )\n'
 	    for j in pois:
@@ -158,41 +157,45 @@ class fdCompile(CA.Compiler):
 
     def addlandmarks(self):
 	resourceIdPair = {}
-	db = MySQLdb.connect("localhost","root","root","radar")
-	cursor = db.cursor()
-	cursor.execute('delete from landmarks')
-	cursor.execute('select * from predicate_resource')
-	resourceIdTemp = cursor.fetchall()
+	self.cursor.execute('delete from landmarks')
+	self.cursor.execute('delete from disj_landmark')
+	self.db.commit()
+	self.cursor.execute('select * from predicate_resource')
+	resourceIdTemp = self.cursor.fetchall()
 	for r in resourceIdTemp:
-	    resourceIdPair[r[1]] = int(r[0])
+	    resourceIdPair[r[1]] = [int(r[0]), r[2]]
 	landmarksFile = open('landmark.txt', 'r')
 	land = []
 	landmarks = (landmarksFile.read()).split('\n')
 	duplicate=[]
+	#print resourceIdPair
 	for landmark in landmarks:
-	    land.append(landmark.split(' '))
+	    if("conj" not in landmark and "disj" not in landmark):
+	        land.append(landmark.split(' '))
+	#print resourceIdPair['deployed_engines'][0]
 	try:
             for l in land:
 		if l[0] != '':
-		    if( "deployed" in l[2]):
+		    if( "deployed" in l[2] and "NegatedAtom" not in l[1]):
 			for i in resourceIdPair:
 			    if(i in l[2]):
-				if resourceIdPair[i] not in duplicate:
-  		                    cursor.execute("insert into landmarks values(" + str(resourceIdPair[i]) +",'" + l[2] + "')")
+				if ((resourceIdPair[i])[1]==True):
+				    self.cursor.execute("insert into disj_landmark values(3, 5)")
+				elif ((resourceIdPair[i])[0]) not in duplicate:
+  		                    self.cursor.execute("insert into landmarks values(" + str(resourceIdPair[i][0]) +",'" + l[2] + "')")
 				    duplicate.append(resourceIdPair[i])
-	    db.commit()
+	    self.db.commit()
 	except:
 	    print "failed \n"
-	    db.rollback()
+	    self.db.rollback()
 	landmarksFile.close()
 
     def addDisjuctiveLandmark(self):
 	resourceIdPair = {}
-	db = MySQLdb.connect("localhost","root","root","radar")
-	cursor = db.cursor()
-	cursor.execute('delete from disj_landmark')
-	cursor.execute('select * from predicate_resource')
-	resourceIdTemp = cursor.fetchall()
+	#self.cursor.execute('delete from disj_landmark')
+	self.db.commit()
+	self.cursor.execute('select * from predicate_resource')
+	resourceIdTemp = self.cursor.fetchall()
 	for r in resourceIdTemp:
 	    resourceIdPair[r[1]] = int(r[0])
 	landmarksFile = open('landmark.txt','r')
@@ -207,65 +210,62 @@ class fdCompile(CA.Compiler):
 	try:
 	    for l in disjLandmark:
 		if l[0] !='':
-		    if("deployed" in l[3] and "deployed" in l[5]):
+		    if("deployed" in l[3] and "NegatedAtom" not in l[2]  and "deployed" in l[5] and "NegatedAtom" not in l[4]):
 			for i in resourceIdPair:
 			    if(i in l[3]):
 				resource1 = str(resourceIdPair[i])
 			    if(i in l[5]):
 				resource2 = str(resourceIdPair[i])
-			cursor.execute("insert into disj_landmark values("+resource1+","+resource2+")")
+			self.cursor.execute("insert into disj_landmark values("+resource1+","+resource2+")")
 			resource1 =""
 			resource2 =""
 			isDisjunctive = True
 	    if(isDisjunctive):
-  	        db.commit()
+  	        self.db.commit()
 	except:
 	   print "Failed"
-	   db.rollback()
+	   self.db.rollback()
 	landmarksFile.close()
 
 	
     def alert(self):
-	db = MySQLdb.connect("localhost","root","root","radar")
-	cursor = db.cursor()
-	cursor.execute('delete from alert')
-	cursor.execute('select id from landmarks')
- 	landmarks = cursor.fetchall()
+	self.cursor.execute('delete from alert')
+	self.db.commit()
+	self.cursor.execute('select id from landmarks')
+ 	landmarks = self.cursor.fetchall()
 	for i in landmarks:
 	    try:
-		cursor.execute('select resource_type from predicate_resource where id = '+ str(i[0]))
-		resource = (cursor.fetchone())[0]
-		cursor.execute('select ' + resource + ' from fire_stations')
-		fire_stations = cursor.fetchall()
+		self.cursor.execute('select resource_type from predicate_resource where id = '+ str(i[0]))
+		resource = (self.cursor.fetchone())[0]
+		self.cursor.execute('select ' + resource + ' from fire_stations')
+		fire_stations = self.cursor.fetchall()
 		for i in fire_stations:
 		    if(int((i)[0]) == 1):
 			continue
 		    else:
-			cursor.execute("insert into alert values('You need "+resource+" before you can complete the task')")
+			self.cursor.execute("insert into alert values('You need "+resource+" before you can complete the task')")
 		        #print 'You need '+ resource+' before you can complete the task'
 			break
 	    except:
 		print 'failed'
-	db.commit()
+	self.db.commit()
 	
     def disj_alert(self):
-	db = MySQLdb.connect("localhost","root","root","radar")
-	cursor = db.cursor()
-	cursor.execute('select landmark1, landmark2 from disj_landmark')
- 	disjlandmarks = cursor.fetchall()
+	self.cursor.execute('select landmark1, landmark2 from disj_landmark')
+ 	disjlandmarks = self.cursor.fetchall()
 	k = 0
 	for i in disjlandmarks:
 	    try:
 		isResource1NotAvail = False
 		isResource2NotAvail = False
-		cursor.execute('select resource_type from predicate_resource where id = '+ str(i[0]))
-		resource1 = (cursor.fetchone())[0]
-		cursor.execute('select resource_type from predicate_resource where id = '+ str(i[1]))
-		resource2 = (cursor.fetchone())[0]
-		cursor.execute('select ' + resource1 + ' from fire_stations')
-		resource1List = cursor.fetchall()
-		cursor.execute('select ' + resource2 + ' from fire_stations')
-		resource2List = cursor.fetchall()
+		self.cursor.execute('select resource_type from predicate_resource where id = '+ str(i[0]))
+		resource1 = (self.cursor.fetchone())[0]
+		self.cursor.execute('select resource_type from predicate_resource where id = '+ str(i[1]))
+		resource2 = (self.cursor.fetchone())[0]
+		self.cursor.execute('select ' + resource1 + ' from fire_stations')
+		resource1List = self.cursor.fetchall()
+		self.cursor.execute('select ' + resource2 + ' from fire_stations')
+		resource2List = self.cursor.fetchall()
 		for i in resource1List:
 		    if(int((i)[0]) == 1):
 			continue
@@ -279,10 +279,10 @@ class fdCompile(CA.Compiler):
 			isResource2NotAvail = True
 			break
 		if(isResource1NotAvail and isResource2NotAvail):
-		    cursor.execute("insert into alert values('You need either "+resource1+" or "+resource2+" before you can complete the task')")
+		    self.cursor.execute("insert into alert values('You need either "+resource1+" or "+resource2+" before you can complete the task')")
 	    except:
 		print 'failed'
-	db.commit()
+	self.db.commit()
 
 
 if __name__ == '__main__':
@@ -302,7 +302,7 @@ if __name__ == '__main__':
     fdCompiler = fdCompile(domainFile, problemFile, obsFile)
     fdCompiler.updateFiles()
     fdCompiler.addlandmarks()
-    fdCompiler.addDisjuctiveLandmark()
+    #fdCompiler.addDisjuctiveLandmark()
     fdCompiler.alert()
     fdCompiler.disj_alert()
     #print '\nFinal Plan >>\n' + fdCompiler.returnPlan()

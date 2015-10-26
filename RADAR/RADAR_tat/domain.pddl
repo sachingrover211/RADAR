@@ -341,7 +341,6 @@
  					(fire_at ?at)
  					(small_fire_at ?at)
 					(deployed_engines ?at)
-					(deployed_small_engines ?at)
 				)
  	:effect		(and	
  					(extinguished_fire ?at)
@@ -372,9 +371,7 @@
 
 (:action barricade
 	:parameters	(?a - fire ?at - pois) 
- 	:precondition 	(and	
- 					(or(deployed_big_engines ?at) (deployed_big_engines ?at))
-				)
+ 	:precondition 	(and(deployed_engines ?at))
  	:effect		(and	
  					(barricaded ?at)
  					(needed_active_local_alert ?a)

@@ -16,6 +16,51 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `alert`
+--
+
+DROP TABLE IF EXISTS `alert`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `alert` (
+  `message` varchar(500) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `alert`
+--
+
+LOCK TABLES `alert` WRITE;
+/*!40000 ALTER TABLE `alert` DISABLE KEYS */;
+INSERT INTO `alert` VALUES ('You need big_engines before you can complete the task'),('You need either big_engines or small_engines before you can complete the task');
+/*!40000 ALTER TABLE `alert` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `disj_landmark`
+--
+
+DROP TABLE IF EXISTS `disj_landmark`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `disj_landmark` (
+  `landmark1` int(11) DEFAULT NULL,
+  `landmark2` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `disj_landmark`
+--
+
+LOCK TABLES `disj_landmark` WRITE;
+/*!40000 ALTER TABLE `disj_landmark` DISABLE KEYS */;
+INSERT INTO `disj_landmark` VALUES (3,5);
+/*!40000 ALTER TABLE `disj_landmark` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `durations`
 --
 
@@ -34,7 +79,7 @@ CREATE TABLE `durations` (
 
 LOCK TABLES `durations` WRITE;
 /*!40000 ALTER TABLE `durations` DISABLE KEYS */;
-INSERT INTO `durations` VALUES ('duration_unit_actions',1),('duration_deploy_police_cars',1),('duration_deploy_small_engines',2),('duration_deploy_big_engines',4),('duration_deploy_ladders',3),('duration_deploy_bulldozers',3),('duration_deploy_helicopters',3),('duration_deploy_rescuers',3),('duration_deploy_ambulances',2),('duration_position_policemen',1),('duration_contact_media',1),('duration_set_up_helpline',1),('duration_issue_local_alert',1),('duration_block_road',2),('duration_prepare_evacuation',1),('duration_evacuation',5),('duration_extinguish_small_fire',1),('duration_extinguish_big_fire',1),('duration_barricade',1),('duration_search_casualties',3),('dduration_attend_casualties',3),('duration_address_media',2);
+INSERT INTO `durations` VALUES ('duration_unit_actions',1),('duration_deploy_police_cars',1),('duration_deploy_small_engines',2),('duration_deploy_big_engines',4),('duration_deploy_ladders',3),('duration_deploy_bulldozers',3),('duration_deploy_helicopters',3),('duration_deploy_rescuers',3),('duration_deploy_ambulances',2),('duration_position_policemen',1),('duration_contact_media',1),('duration_set_up_helpline',1),('duration_issue_local_alert',1),('duration_block_road',2),('duration_prepare_evacuation',1),('duration_evacuation',5),('duration_extinguish_small_fire',1),('duration_extinguish_big_fire',1),('duration_barricade',1),('duration_search_casualties',3),('duration_address_media',2),('duration_attend_casualties',3);
 /*!40000 ALTER TABLE `durations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,8 +107,36 @@ CREATE TABLE `fire_stations` (
 
 LOCK TABLES `fire_stations` WRITE;
 /*!40000 ALTER TABLE `fire_stations` DISABLE KEYS */;
-INSERT INTO `fire_stations` VALUES ('adminfire',6,6,6,6,6,6),('mesafire',6,6,6,6,6,6),('scottsfire',6,6,6,6,6,6),('phxfire',6,6,6,6,6,6),('guadafire',6,6,6,6,6,6);
+INSERT INTO `fire_stations` VALUES ('adminfire',0,0,1,1,1,1),('mesafire',0,0,1,1,1,1),('scottsfire',0,0,1,1,1,1),('phxfire',0,0,1,1,1,1),('guadafire',0,0,1,1,1,1);
 /*!40000 ALTER TABLE `fire_stations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `fire_stations_actual`
+--
+
+DROP TABLE IF EXISTS `fire_stations_actual`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fire_stations_actual` (
+  `fire_station` varchar(200) DEFAULT NULL,
+  `small_engines` int(11) DEFAULT NULL,
+  `big_engines` int(11) DEFAULT NULL,
+  `ladders` int(11) DEFAULT NULL,
+  `bulldozers` int(11) DEFAULT NULL,
+  `helicopters` int(11) DEFAULT NULL,
+  `rescuers` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fire_stations_actual`
+--
+
+LOCK TABLES `fire_stations_actual` WRITE;
+/*!40000 ALTER TABLE `fire_stations_actual` DISABLE KEYS */;
+INSERT INTO `fire_stations_actual` VALUES ('adminfire',1,1,1,1,1,1),('mesafire',1,1,1,1,1,1),('scottsfire',1,1,1,1,1,1),('phxfire',1,1,1,1,1,1),('guadafire',1,1,1,1,1,1);
+/*!40000 ALTER TABLE `fire_stations_actual` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -97,7 +170,8 @@ DROP TABLE IF EXISTS `landmarks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `landmarks` (
-  `predicate_id` int(11) DEFAULT NULL
+  `id` int(11) DEFAULT NULL,
+  `landmark` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -107,7 +181,7 @@ CREATE TABLE `landmarks` (
 
 LOCK TABLES `landmarks` WRITE;
 /*!40000 ALTER TABLE `landmarks` DISABLE KEYS */;
-INSERT INTO `landmarks` VALUES (1),(9),(18),(19),(20),(21),(22),(24),(1),(9),(18),(19),(20),(21),(22),(24),(1),(9),(18),(19),(20),(21),(22),(24);
+INSERT INTO `landmarks` VALUES (2,'deployed_bulldozers(byeng)'),(1,'deployed_helicopters(byeng)'),(4,'deployed_rescuers(byeng)'),(3,'deployed_big_engines(byeng)');
 /*!40000 ALTER TABLE `landmarks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,7 +272,7 @@ CREATE TABLE `plans` (
 
 LOCK TABLES `plans` WRITE;
 /*!40000 ALTER TABLE `plans` DISABLE KEYS */;
-INSERT INTO `plans` VALUES ('(pick-up b1)'),('(stack b1 b2)');
+INSERT INTO `plans` VALUES ('(alert firechief adminfire)');
 /*!40000 ALTER TABLE `plans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,26 +301,27 @@ INSERT INTO `police_stations` VALUES ('apachestation',6,6),('courtstation',6,6),
 UNLOCK TABLES;
 
 --
--- Table structure for table `prdicate_resource`
+-- Table structure for table `predicate_resource`
 --
 
-DROP TABLE IF EXISTS `prdicate_resource`;
+DROP TABLE IF EXISTS `predicate_resource`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `prdicate_resource` (
+CREATE TABLE `predicate_resource` (
   `id` int(11) DEFAULT NULL,
-  `resource_type` varchar(50) DEFAULT NULL
+  `resource_type` varchar(50) DEFAULT NULL,
+  `isDisjunctive` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `prdicate_resource`
+-- Dumping data for table `predicate_resource`
 --
 
-LOCK TABLES `prdicate_resource` WRITE;
-/*!40000 ALTER TABLE `prdicate_resource` DISABLE KEYS */;
-INSERT INTO `prdicate_resource` VALUES (9,'helicopter');
-/*!40000 ALTER TABLE `prdicate_resource` ENABLE KEYS */;
+LOCK TABLES `predicate_resource` WRITE;
+/*!40000 ALTER TABLE `predicate_resource` DISABLE KEYS */;
+INSERT INTO `predicate_resource` VALUES (1,'helicopters',0),(2,'bulldozers',0),(3,'big_engines',0),(4,'rescuers',0),(5,'small_engines',0),(6,'deployed_engines',1);
+/*!40000 ALTER TABLE `predicate_resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -487,4 +562,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-09-29 12:07:05
+-- Dump completed on 2015-10-26 16:10:48
