@@ -56,7 +56,7 @@ class fdCompile(CA.Compiler):
 	tempProblem = self.addNotNeeded(tempProblem, cursor)
 
 	#The given data or resources
-	query = 'select * from fire_stations'
+	query = 'select * from fire_stations_actual'
   	query_for_predicates = 'select * from predicates_for_fireStation'        
 	tempProblem = self.resourceAvailable(query, query_for_predicates, cursor, tempProblem)
 
@@ -157,7 +157,6 @@ class fdCompile(CA.Compiler):
         return tempProblem
 
     def addlandmarks(self):
-        #resourceIdPair = {'helicopter': 1, 'bulldozers': 2, 'big_engine': 3, 'rescuer':4 }
 	resourceIdPair = {}
 	db = MySQLdb.connect("localhost","root","root","radar")
 	cursor = db.cursor()
@@ -166,8 +165,6 @@ class fdCompile(CA.Compiler):
 	resourceIdTemp = cursor.fetchall()
 	for r in resourceIdTemp:
 	    resourceIdPair[r[1]] = int(r[0])
-	#resource = resourceIdPair.keys()
-	res = cursor.fetchall()
 	landmarksFile = open('landmark.txt', 'r')
 	land = []
 	landmarks = (landmarksFile.read()).split('\n')
@@ -187,7 +184,46 @@ class fdCompile(CA.Compiler):
 	except:
 	    print "failed \n"
 	    db.rollback()
-	landmarksFile.close()	    
+	landmarksFile.close()
+
+    def addDisjuctiveLandmark(self):
+	resourceIdPair = {}
+	db = MySQLdb.connect("localhost","root","root","radar")
+	cursor = db.cursor()
+	cursor.execute('delete from disj_landmark')
+	cursor.execute('select * from predicate_resource')
+	resourceIdTemp = cursor.fetchall()
+	for r in resourceIdTemp:
+	    resourceIdPair[r[1]] = int(r[0])
+	landmarksFile = open('landmark.txt','r')
+	disjLandmark = []
+	resource1 =""
+	resource2 =""
+	isDisjunctive = 0
+	landmarks = (landmarksFile.read()).split('\n')
+	for landmark in landmarks:
+	    if('disj' in landmark):
+		disjLandmark.append(landmark.split(' '))
+	try:
+	    for l in disjLandmark:
+		if l[0] !='':
+		    if("deployed" in l[3] and "deployed" in l[5]):
+			for i in resourceIdPair:
+			    if(i in l[3]):
+				resource1 = str(resourceIdPair[i])
+			    if(i in l[5]):
+				resource2 = str(resourceIdPair[i])
+			cursor.execute("insert into disj_landmark values("+resource1+","+resource2+")")
+			resource1 =""
+			resource2 =""
+			isDisjunctive = True
+	    if(isDisjunctive):
+  	        db.commit()
+	except:
+	   print "Failed"
+	   db.rollback()
+	landmarksFile.close()
+
 	
     def alert(self):
 	db = MySQLdb.connect("localhost","root","root","radar")
@@ -199,26 +235,62 @@ class fdCompile(CA.Compiler):
 	    try:
 		cursor.execute('select resource_type from predicate_resource where id = '+ str(i[0]))
 		resource = (cursor.fetchone())[0]
-		cursor.execute('select ' + resource + ' from fire_stations_actual')
+		cursor.execute('select ' + resource + ' from fire_stations')
 		fire_stations = cursor.fetchall()
 		for i in fire_stations:
 		    if(int((i)[0]) == 1):
 			continue
 		    else:
-			cursor.execute("insert into alert values('"+resource+"')")
-		        print 'You need '+ resource+' before you can complete the task'
+			cursor.execute("insert into alert values('You need "+resource+" before you can complete the task')")
+		        #print 'You need '+ resource+' before you can complete the task'
 			break
 	    except:
 		print 'failed'
-	db.commit()	
-    
+	db.commit()
+	
+    def disj_alert(self):
+	db = MySQLdb.connect("localhost","root","root","radar")
+	cursor = db.cursor()
+	cursor.execute('select landmark1, landmark2 from disj_landmark')
+ 	disjlandmarks = cursor.fetchall()
+	k = 0
+	for i in disjlandmarks:
+	    try:
+		isResource1NotAvail = False
+		isResource2NotAvail = False
+		cursor.execute('select resource_type from predicate_resource where id = '+ str(i[0]))
+		resource1 = (cursor.fetchone())[0]
+		cursor.execute('select resource_type from predicate_resource where id = '+ str(i[1]))
+		resource2 = (cursor.fetchone())[0]
+		cursor.execute('select ' + resource1 + ' from fire_stations')
+		resource1List = cursor.fetchall()
+		cursor.execute('select ' + resource2 + ' from fire_stations')
+		resource2List = cursor.fetchall()
+		for i in resource1List:
+		    if(int((i)[0]) == 1):
+			continue
+		    else:
+			isResource1NotAvail = True
+			break
+		for i in resource2List:
+		    if(int((i)[0]) == 1):
+			continue
+		    else:
+			isResource2NotAvail = True
+			break
+		if(isResource1NotAvail and isResource2NotAvail):
+		    cursor.execute("insert into alert values('You need either "+resource1+" or "+resource2+" before you can complete the task')")
+	    except:
+		print 'failed'
+	db.commit()
+
 
 if __name__ == '__main__':
     
     if len(sys.argv) == 1:
-        domainFile  = 'domain.pddl'
-        problemFile = 'template1.pddl'
-        obsFile     = 'obs1.dat'
+        domainFile  = PATH_TO_OBS_COMPILER+'domain.pddl'
+        problemFile = PATH_TO_OBS_COMPILER+'template1.pddl'
+        obsFile     = PATH_TO_OBS_COMPILER+'obs1.dat'
     else:
         try:
             domainFile  = sys.argv[1]
@@ -230,30 +302,9 @@ if __name__ == '__main__':
     fdCompiler = fdCompile(domainFile, problemFile, obsFile)
     fdCompiler.updateFiles()
     fdCompiler.addlandmarks()
+    fdCompiler.addDisjuctiveLandmark()
     fdCompiler.alert()
+    fdCompiler.disj_alert()
     #print '\nFinal Plan >>\n' + fdCompiler.returnPlan()
 
-'''    def addlandmarks(self):
-	db = MySQLdb.connect("localhost","root","root","radar")
-	cursor = db.cursor()
-	cursor.execute('delete from landmarks')
-	db.commit()
-	landmarks = open('example.txt', 'r')
-	land=[]
-        landEdge = ((landmarks.read()).split('\n'))
-        landEdge = landEdge[0: (len(landEdge) - 1)]
-	for i in landEdge:
-	    land.append(i.split(' '))
-        l = []
-        for i in land:
-            l.append(int(i[0]))
-        l = list(set(l))
-	try:
-	    for i in l:
-	    	cursor.execute('insert into landmarks values('+str(i)+')')
-            db.commit()
-	except:
-	    db.rollback()
-	landmarks.close()
-'''
 

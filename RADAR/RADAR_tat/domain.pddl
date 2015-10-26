@@ -340,11 +340,13 @@
  	:precondition 	(and	
  					(fire_at ?at)
  					(small_fire_at ?at)
-					(or (deployed_big_engines ?at) (deployed_small_engines ?at))
+					(deployed_engines ?at)
+					(deployed_small_engines ?at)
 				)
  	:effect		(and	
  					(extinguished_fire ?at)
  					(not (fire_at ?at))
+					(not (small_fire_at ?at))
  					(needed_address_media)
 					(not (not_needed_address_media))
  					(needed_search_casualties ?at)

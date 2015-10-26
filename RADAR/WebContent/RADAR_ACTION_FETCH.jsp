@@ -25,9 +25,9 @@ ProcessBuilder pb = new ProcessBuilder(
 	    p.waitFor(); 
 
 Class.forName("com.mysql.jdbc.Driver"); 
-java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/radar","root","password");
+java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/radar","root","root");
 Statement st= con.createStatement();
-ResultSet rs = st.executeQuery("select * from suggested_actions");
+ResultSet rs = st.executeQuery("select * from alerts");
 
 JSONArray json_arr = new JSONArray();
 ResultSetMetaData rsmd = rs.getMetaData();

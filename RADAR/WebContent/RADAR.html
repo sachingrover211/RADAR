@@ -214,28 +214,20 @@
 	function insertData(){
 		xmlhttp = new XMLHttpRequest();
 		var tasklist = document.getElementById("taskList");		
-		var planlist = document.getElementById("planList");	
-		var subgoals = document.getElementById("subGoals");	
+		//var planlist = document.getElementById("planList");	
+		//var subgoals = document.getElementById("subGoals");	
 		var tl = tasklist.childNodes;		
-		var pl = planlist.childNodes;
-		var sg = subgoals.childNodes;
+		//var pl = planlist.childNodes;
+		//var sg = subgoals.childNodes;
 		var taskArray = [], i = -1, len = tl.length;
 		while(++i<len) taskArray[i] = getText(tl.item(i));
-		var planArray = [], j = -1, len2 = pl.length;
-		while(++j<len2) planArray[j] = getText(pl.item(j));
-		var sgArray = [], k = -1, len3 = sg.length;
-		while(++k<len3) sgArray[k] = getText(sg.item(k));
-		//var taskArray = map(tl);
-		//var planArray = map(pl);
-		//var taskArray = Array.prototype.slice.call(tl);
-		//var planArray = Array.prototype.slice.call(pl);
-	
-		//var planArray = Array.prototype.slice.call(planlist);
-		var arr1=["hi", "bye"];
-		var arr2=["hello", "cu"];
-        //xmlhttp.open("GET","RADAR_DB.jsp?taskList="+arr1+"&planList="+arr2, true);
-        xmlhttp.open("GET","RADAR_DB.jsp?taskList="+taskArray+"&planList="+planArray+"&sgList="+sgArray, true);
-        xmlhttp.send();
+		//var planArray = [], j = -1, len2 = pl.length;
+		//while(++j<len2) planArray[j] = getText(pl.item(j));
+		//var sgArray = [], k = -1, len3 = sg.length;
+		//while(++k<len3) sgArray[k] = getText(sg.item(k));
+		
+        	xmlhttp.open("GET","RADAR_DB.jsp?taskList="+taskArray, true);//+"&planList="+planArray+"&sgList="+sgArray, true);
+	        xmlhttp.send();
 		
 	}
 	
@@ -344,7 +336,7 @@
 			<div id="container3" class="well well-sm" style="overflow:auto;">
 				<ul class="list-group">
 					<li class="news list-group-item">
-						<p>Fire in Big Fat Greek <a onclick="formatModal1(this)" data-toggle="modal" data-target="#updateTask"><span class="glyphicon glyphicon-plus"></span></a> </p>
+						<p>Fire At Byeng <a onclick="formatModal1(this)" data-toggle="modal" data-target="#updateTask"><span class="glyphicon glyphicon-plus"></span></a> </p>
 					</li>
 					<li class="news list-group-item">
 						<p>Fire spreading to nearby building <a onclick="formatModal1(this)" data-toggle="modal" data-target="#updateTask"><span class="glyphicon glyphicon-plus"></span></a> </p>
@@ -376,8 +368,8 @@
 						<input type="text" placeholder="Update task description" class="form-control" id="bg">
 					</div>
 					<button type="submit" class="btn btn-success" id="updateButton" onclick="updateTask(document.getElementById('bg').value)">Enter</button>
-					<button type="submit" onclick="insertData()">WritetoDB</button>
-					<button type="submit" onclick="selectData()">FetchfromDB</button>
+					<button type="submit" onclick="insertData()">Update Info</button>
+					<button type="submit" onclick="selectData()">Check For Fesability</button>
 				</div>
 			</div>
 		    <div class="row">
