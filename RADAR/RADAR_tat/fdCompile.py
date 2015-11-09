@@ -237,15 +237,19 @@ class fdCompile(CA.Compiler):
 	    try:
 		self.cursor.execute('select resource_type from predicate_resource where id = '+ str(i[0]))
 		resource = (self.cursor.fetchone())[0]
+		print resource
 		self.cursor.execute('select ' + resource + ' from fire_stations')
 		fire_stations = self.cursor.fetchall()
+		print fire_stations;
+		noAlert = False
 		for i in fire_stations:
 		    if(int((i)[0]) == 1):
-			continue
-		    else:
-			self.cursor.execute("insert into alert values('You need "+resource+" before you can complete the task')")
-		        #print 'You need '+ resource+' before you can complete the task'
+			noAlert = True
 			break
+		    else:
+			continue;
+		if(noAlert == False):
+	            self.cursor.execute("insert into alert values('You need "+resource+" before you can complete the task')")
 	    except:
 		print 'failed'
 	self.db.commit()

@@ -43,66 +43,88 @@
 	    return ret;
 	}
 	
-	var alertId=1;
 	function getAction(){
+		/*exec('~/./play.sh /media/external/' + req.params.movie,
+				  function (error, stdout, stderr) {
+				    console.log('stdout: ' + stdout);
+				    console.log('stderr: ' + stderr);
+				    if (error !== null) {
+				      console.log('exec error: ' + error);
+				    }
+				});*/
+		//exec('/home/vmeduri/Desktop/FastDownward/src/test_js.sh /media/external');
 		if (xmlhttp2.readyState==4)
 		  {
+			/*var dictionary = [ {
+						"police_station" : "apachestation","cars":6,"police_men":6
+						},{
+							"police_station":"courtstation","cars":6,"police_men":6
+							},{
+								"police_station":"substation","cars":6,"police_men":6
+								} ]
+			*/
 			dictionary = JSON.parse(xmlhttp2.responseText);
+			//dictionary = eval("("+xmlhttp.responseText+")");
+			//dictionary = eval('('+json_arr+')');
 			var i = 0;
-			var list = document.getElementById("alerts"); 
-			list.innerHTML ="";
+			var list = document.getElementById("suggested_action"); 
 		 
 			for ( var i = 0; i < dictionary.length; i++) {
 				var obj = dictionary[i];
 				console.log(obj);
 				var crunchifyName;
 				var crunchifyValue;
+				//var additional="<a onclick=\"formatModal2(this)\" data-toggle=\"modal\" data-target=\"#updatePlan\"><span class=\"glyphicon glyphicon-plus\"></span></a>";
+		 
+				
+				//document.writeln("<table border='0'  width=100 >");
 				var count = 0;
 		 		var to_write="";
 				for ( var key in obj) {
 					
 					crunchifyName = key;
 					crunchifyValue = obj[key].toString();
+					/*+document.writeln("<td><B>" + crunchifyName
+							+ ":  </B></td><td width=50>" + crunchifyValue
+							+ "</td>");*/
+					//to_write+=crunchifyName.toString()+": "+crunchifyValue+",,, ";
 					to_write+=crunchifyValue;
 					count++;
 					if(count > 2) {
+						//document.writeln("<tr><B>"+to_write+"</B></tr>");
 						count=0;
 						var entry = document.createElement('li');
 						entry.setAttribute("class", "news list-group-item");
-	        			entry.setAttribute("id", "alert"+alertId)
-	        			alertId = alertId +1;
+	        			
 						//entry.appendChild(document.createTextNode(to_write.toString()));
 		      			var onclk = document.createElement("p");
 		      			//onclk.appendChild(document.createTextNode(to_write.toString()));
-							onclk.innerHTML='<p>'+to_write.toString()+ //'<a onclick="formatModal2(this)" data-toggle="modal" data-target="#updatePlan">'+
-											//'<span class="glyphicon glyphicon-plus">'+
-											//'</span>'+
-										//'</a>'
-										+'</p>';
+							onclk.innerHTML='<p>'+to_write.toString()+ '<a onclick="formatModal2(this)" data-toggle="modal" data-target="#updatePlan">'+
+											'<span class="glyphicon glyphicon-plus">'+
+											'</span>'+
+										'</a>'+'</p>';
 							entry.appendChild(onclk);
 		      			list.insertBefore(entry,list.firstChild);
-		      					//(document.getElementById("resourceTable")).appendChild(entry);
+		      					//(document.getElementById("pddlList")).appendChild(entry);
 		      			to_write="";
 					}
 					
 				}
 				if(count > 0){
-					//document.writeln("<tr><B>"+to_where fire_station like '"+station+"'"write+"</B></tr>");
+					//document.writeln("<tr><B>"+to_write+"</B></tr>");
 					count=0;
 					var entry = document.createElement('li');
 					entry.setAttribute("class", "news list-group-item");
-        			entry.setAttribute("id", "alert"+alertId)
-        			alertId = alertId +1;
       			//entry.appendChild(document.createTextNode(to_write.toString()));
       			var onclk = document.createElement("p");
       			//var embed = document.createTextNode(to_write.toString()));
-					onclk.innerHTML=/*'<ins>'+*/ to_write.toString() //+ '<a onclick="formatModal2(this)" data-toggle="modal" data-target="#updatePlan">'+
-					//				'<span class="glyphicon glyphicon-plus">'+
-					//				'</span>'+
-					//			'</a>'/*+'</ins>'*/;
+					onclk.innerHTML=/*'<ins>'+*/ to_write.toString() + '<a onclick="formatModal2(this)" data-toggle="modal" data-target="#updatePlan">'+
+									'<span class="glyphicon glyphicon-plus">'+
+									'</span>'+
+								'</a>'/*+'</ins>'*/;
 					entry.appendChild(onclk);
       			list.insertBefore(entry,list.firstChild);
-      					//(document.getElementById("resourceTable")).appendChild(entry);
+      					//(document.getElementById("pddlList")).appendChild(entry);
       			to_write="";
 				}
 				//document.writeln("</table>");
@@ -111,121 +133,67 @@
 		  }
 	}
 	
-	function resetTable(list){
-		list.style.backgroundColor="white";
-	 	list.innerHTML="";
-	 	var tableHead = document.createElement('thead');
-	 	var tableRow = document.createElement("tr");
-	 	var fireStation = document.createElement("th");
-	 	fireStation.innerHTML = "Fire Station";
-	 	var smallEngine = document.createElement("th");
-	 	smallEngine.innerHTML = "Small Engine";
-	 	var bigEngine = document.createElement("th");
-	 	bigEngine.innerHTML = "Big Engine";
-	 	var ladder = document.createElement("th");
-	 	ladder.innerHTML = "Ladder";
-	 	var bulldozers = document.createElement("th");
-	 	bulldozers.innerHTML = "Bulldozers";
-	 	var helicopters = document.createElement("th");
-	 	helicopters.innerHTML = "Helicopters";
-	 	var rescuers = document.createElement("th");
-	 	rescuers.innerHTML = "Rescuers";
-	 	tableRow.appendChild(fireStation);
-	 	tableRow.appendChild(smallEngine);
-	 	tableRow.appendChild(bigEngine);
-	 	tableRow.appendChild(ladder);
-	 	tableRow.appendChild(bulldozers);
-	 	tableRow.appendChild(helicopters);
-	 	tableRow.appendChild(rescuers);
-	 	tableHead.appendChild(tableRow);
-	 	list.appendChild(tableHead);
-	}
-	
 	function getData(){
 		if (xmlhttp.readyState==4)
 		  {
+			/*var dictionary = [ {
+						"police_station" : "apachestation","cars":6,"police_men":6
+						},{
+							"police_station":"courtstation","cars":6,"police_men":6
+							},{
+								"police_station":"substation","cars":6,"police_men":6
+								} ]
+			*/
 			dictionary = JSON.parse(xmlhttp.responseText);
+			//dictionary = eval("("+xmlhttp.responseText+")");
+			//dictionary = eval('('+json_arr+')');
 			var i = 0;
-			var list = document.getElementById("resourceTable"); 
-			resetTable(list)
-			var tableBody = document.createElement("tbody");
+			var list = document.getElementById("pddlList"); 
 		 
 			for ( var i = 0; i < dictionary.length; i++) {
 				var obj = dictionary[i];
 				console.log(obj);
-				var trow = document.createElement("tr");
 				var crunchifyName;
-				var crunchifyValue;				
+				var crunchifyValue;
+		 
+				
+				//document.writeln("<table border='0'  width=100 >");
 				var count = 0;
 		 		var to_write="";
-		 		var fireStation = document.createElement("td");		 		 	
-	 		 	var smallEngine = document.createElement("td");
-	 		 	var bigEngine = document.createElement("td");
-	 		 	var ladder = document.createElement("td");
-	 		 	var bulldozers = document.createElement("td");
-	 		 	var helicopters = document.createElement("td");
-	 		 	var rescuers = document.createElement("td");
-		 		for (var key in obj){
-		 			console.log(key);
-		 			var value = obj[key].toString();	 			
-		 		 	if(key == "fire_station"){
-		 		 		fireStation.innerHTML = value;
-		 		 	}
-		 		 	else if(key == "rescuers"){
-		 		 		rescuers.innerHTML = value;
-		 		 	}
-		 		 	else if(key == "big_engines"){
-		 		 		bigEngine.innerHTML = value;
-		 		 	}
-		 		 	else if(key == "small_engines"){
-		 		 		smallEngine.innerHTML = value;
-		 		 	}
-		 		 	else if(key == "bulldozers"){
-		 		 		bulldozers.innerHTML = value;
-		 		 	}
-		 		 	else if(key == "helicopters"){
-		 		 		helicopters.innerHTML = value;
-		 		 	}
-		 		 	else if(key == "ladders"){
-		 		 		ladder.innerHTML = value;
-		 		 	}
-		 		}
-		 		trow.appendChild(fireStation);
-		 		trow.appendChild(smallEngine);
-		 		trow.appendChild(bigEngine);
-		 		trow.appendChild(ladder);
-		 		trow.appendChild(bulldozers);
-		 		trow.appendChild(helicopters);
-		 		trow.appendChild(rescuers);
-		 		tableBody.appendChild(trow);
-				/*for ( var key in obj) {
+				for ( var key in obj) {
 					
 					crunchifyName = key;
 					crunchifyValue = obj[key].toString();
-					//console.log(ucrunchifyName);
-					//console.log(crunchifyValue);
+					/*+document.writeln("<td><B>" + crunchifyName
+							+ ":  </B></td><td width=50>" + crunchifyValue
+							+ "</td>");*/
 					to_write+=crunchifyName.toString()+": "+crunchifyValue+", ";
 					count++;
 					if(count > 2) {
+						//document.writeln("<tr><B>"+to_write+"</B></tr>");
 						count=0;
 						var entry = document.createElement('li');
 						entry.setAttribute("class", "news list-group-item");
 	        			entry.appendChild(document.createTextNode(to_write.toString()));
 	        			list.insertBefore(entry,list.firstChild);
+	        					//(document.getElementById("pddlList")).appendChild(entry);
 	        			to_write="";
 					}
 					
 				}
 				if(count > 0){
+					//document.writeln("<tr><B>"+to_write+"</B></tr>");
 					count=0;
 					var entry = document.createElement('li');
 					entry.setAttribute("class", "news list-group-item");
         			entry.appendChild(document.createTextNode(to_write.toString()));
         			list.insertBefore(entry,list.firstChild);
+        					//(document.getElementById("pddlList")).appendChild(entry);
         			to_write="";
-				}*/
+				}
+				//document.writeln("</table>");
 			}
-			list.appendChild(tableBody);		
+		
 		  }
 	}
 	
@@ -236,58 +204,12 @@
 		xmlhttp.open("GET","RADAR_DB_FETCH.jsp",true);
 		xmlhttp.send(null);
 		
-		//getAlerts();
+		xmlhttp2 = new XMLHttpRequest();
+		xmlhttp2.onreadystatechange=getAction;
+		xmlhttp2.open("GET","RADAR_ACTION_FETCH.jsp",true);
+		xmlhttp2.send(null);
 		
-		//xmlhttp2 = new XMLHttpRequest();
-		//xmlhttp2.onreadystatechange=getAction;
-		//xmlhttp2.open("GET","RADAR_ACTION_FETCH.jsp",true);
-		//xmlhttp2.send(null);		
 	}
-	
-	var currentPlan =1;
-	
-	function execute(){
-		if(currentPlan < idCounter){
-			var plan = document.getElementById("plan"+currentPlan);
-			console.log(plan.innerHTML);
-			console.log(currentPlan);
-			var resource = "$$$$$$$";
-			if(plan.innerHTML.indexOf("rescuers") > -1){
-				resource = "rescuers"
-			}
-			else if(plan.innerHTML.indexOf("big_engines") > -1){
-				resource = "big_engines"
-			}
-			else if(plan.innerHTML.indexOf("helicopters") > -1){
-				resource = "helicopters"
-			}
-			else if(plan.innerHTML.indexOf("bulldozers") > -1){
-				resource = "bulldozers"
-			}
-			else if(plan.innerHTML.indexOf("small_engines") > -1){
-				resource = "small_engines"
-			}
-			console.log(resource);
-			if(alertId ==1){
-				plan.setAttribute("class", "news list-group-item list-group-item-success");
-				currentPlan = currentPlan+1;
-			}
-			else{
-				var i;
-				for(i = 1; i < alertId; i++){
-					var alert = document.getElementById("alert"+i);
-					var content = alert.innerHTML;
-					if (content.indexOf(resource) > -1){
-						plan.setAttribute("class", "news list-group-item list-group-item-danger");
-					}
-					else{
-						plan.setAttribute("class", "news list-group-item list-group-item-success");
-						currentPlan = currentPlan+1;
-					}
-				}
-			}
-		}
-	}	
 	
 	function insertData(){
 		xmlhttp = new XMLHttpRequest();
@@ -306,8 +228,8 @@
 		
         	xmlhttp.open("GET","RADAR_DB.jsp?taskList="+taskArray, true);//+"&planList="+planArray+"&sgList="+sgArray, true);
 	        xmlhttp.send();
+		
 	}
-	var idCounter=1;
 	
 	function updateTask(ss) {
 		if ( ss != "" ) {
@@ -316,72 +238,16 @@
 			entry.setAttribute("class", "news list-group-item");
 			entry.appendChild(document.createTextNode(ss));
 			list.insertBefore(entry,list.firstChild);
-			insertData();
-			setTimeout(selectData, 2000);	
-			getAlerts();
-			getAlerts();
-			if(idCounter==1){
-				addHumanPlans(ss);	
-			}			
 		}
-	}
-	
-	function getAlerts(){
-		alertId = 1;
-		xmlhttp2 = new XMLHttpRequest();
-		xmlhttp2.onreadystatechange=getAction;
-		xmlhttp2.open("GET","RADAR_ACTION_FETCH.jsp",true);
-		xmlhttp2.send(null);
-	}
-	
-	function addHumanPlans(task){
-		if(task.trim() == "Fire At Byeng"){
-			updatePlan("Inform the media");
-			updatePlan("Put up barricades");
-			updatePlan("Dispatch fire trucks");
-			updatePlan("Send rescuers");
-			updatePlan("Send ambulance");
-			updatePlan("Once fire is down remove barricades");
-			updatePlan("Address media");
-		}
-		else if(task.trim() == "Small Fire At Byeng"){
-			updatePlan("Inform the media");
-			updatePlan("Put up barricades");
-			updatePlan("Dispatch small_engines");
-			updatePlan("Send police personal");
-			updatePlan("Send ambulance");
-			updatePlan("Once fire is down remove barricades");
-			updatePlan("Address media");
-		}
-	}	
-	
-	function addResource(){
-		var fireStation = document.getElementById("fireStation").value;
-		var resource = document.getElementById("resourceOption").value;
-		console.log(fireStation);
-		console.log(resource);
-		var sql ="update fire_stations set "+resource+" =1 where fire_station like '"+fireStation+"'";
-		console.log(sql);
-		xmlhttp = new XMLHttpRequest();
-		xmlhttp.open("GET","UPDATE_RESOURCE.jsp?station="+fireStation+"&resource="+resource, true);//+"&planList="+planArray+"&sgList="+sgArray, true);
-        xmlhttp.send();
-        setTimeout(selectData, 2000);			
-		getAlerts();
-        
 	}
 	
 	function updatePlan(ss) {
 		if ( ss != "" ) {
 			var list = document.getElementById("planList");
-			var textBox = document.getElementById('ng');
-			textBox.value = "";
 			var entry = document.createElement('li');
 			entry.setAttribute("class", "news list-group-item");
-			var planID = "plan"+idCounter;
-			idCounter = idCounter + 1;
-			entry.setAttribute("id", planID);
 			entry.appendChild(document.createTextNode(ss));
-			list.appendChild(entry,list.firstChild);
+			list.insertBefore(entry,list.firstChild);
 		}
 	}
 	
@@ -391,7 +257,7 @@
 	}
 
 	function formatModal2(elem) {
-		$("#updatePslan").contents().find("div div h4").html("Add new action?");
+		$("#updatePlan").contents().find("div div h4").html("Add new action?");
 		$("#updatePlan").contents().find("div div p").html(elem.parentNode.innerHTML.split("<")[0]);
 	}
 	</script>
@@ -409,10 +275,10 @@
 		#r1c1 {height:200px; padding:0px; margin-left:30px;} 
 		#r1c2 {height:300px; padding:0px; margin-left:10px;} 
 		#r1c1 > div {height:200px;} 
-		#r1c2 > div {height:300px;pelementIdosition:relative;} 
+		#r1c2 > div {height:300px;position:relative;} 
 		#r1c3 > div {height:700px;} 
 		#r2c1 {padding:15px; width:265px;}
-		#r2c2 {padding:15px; width:530px; height:Fire At Byeng270px; overflow:auto;}
+		#r2c2 {padding:15px; width:530px; height:270px; overflow:auto;}
 		#r2c1 {margin-left:25px;}
 		#r2c4 {padding-left:30px;}
 		#r2c4 > div {width:100%;height:270px;border: 2px solid;}
@@ -422,9 +288,7 @@
 		#updateElement {height:40px;width:100%;position:absolute;bottom:0;left:0;}
 		#updateButton{float:right;margin-right:10px;margin-top:10px;}
 		#updateText{width:90%;float:left;margin-left:15px;margin-top:10px;}
-		#updatePlanButton{margin-left:5px;margin-right:5px;margin-top:0px;}
-		#nextPlan{float:right;margin-right:20px;margin-top:0px;}
-		#addResource{float:center;margin-right:20px;margin-top:5px;}
+		#updatePlanButton{float:right;margin-right:20px;margin-top:0px;}
 		#updatePlanText{width:78%;float:left;margin-left:20px;margin-top:0px;}
 		.newsBoard{padding:5px; height:370px;}
 		.newsBoard > div {margin-bottom:10px;}
@@ -472,15 +336,21 @@
 			<div id="container3" class="well well-sm" style="overflow:auto;">
 				<ul class="list-group">
 					<li class="news list-group-item">
-						<p>Fire At Byeng   <a onclick="formatModal1(this)" data-toggle="modal" data-target="#updateTask"><span class="glyphicon glyphicon-plus"></span></a> </p>
+						<p>Fire At Byeng <a onclick="formatModal1(this)" data-toggle="modal" data-target="#updateTask"><span class="glyphicon glyphicon-plus"></span></a> </p>
 					</li>
 					<li class="news list-group-item">
-						<p>Small Fire At Byeng   <a onclick="formatModal1(this)" data-toggle="modal" data-target="#updateTask"><span class="glyphicon glyphicon-plus"></span></a> </p>
+						<p>Fire spreading to nearby building <a onclick="formatModal1(this)" data-toggle="modal" data-target="#updateTask"><span class="glyphicon glyphicon-plus"></span></a> </p>
+					</li>
+					<li class="news list-group-item">
+						<p>Tempe Police arrive at the scene <a onclick="formatModal1(this)" data-toggle="modal" data-target="#updateTask"><span class="glyphicon glyphicon-plus"></span></a> </p>
+					</li>
+					<li class="news list-group-item">
+						<p>Fire extinguishers inside shop not working <a onclick="formatModal1(this)" data-toggle="modal" data-target="#updateTask"><span class="glyphicon glyphicon-plus"></span></a> </p>
 					</li>
 				</ul>
 			</div>
 			<div>
-<a class="twitter-timeline" href="https://twittresourceTableeronclick.com/azcentral" data-widget-id="485992484300804097">Tweets by @azcentral</a>
+<a class="twitter-timeline" href="https://twitter.com/azcentral" data-widget-id="485992484300804097">Tweets by @azcentral</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 			</div>
 		</div>
@@ -498,8 +368,8 @@
 						<input type="text" placeholder="Update task description" class="form-control" id="bg">
 					</div>
 					<button type="submit" class="btn btn-success" id="updateButton" onclick="updateTask(document.getElementById('bg').value)">Enter</button>
-					<!--  <button type="submit" onclick="insertData()">Update Info</button>
-					<button type="submit" onclick="selectData()">Check For Fesability</button>-->
+					<button type="submit" onclick="insertData()">Update Info</button>
+					<button type="submit" onclick="selectData()">Check For Fesability</button>
 				</div>
 			</div>
 		    <div class="row">
@@ -507,27 +377,23 @@
 					<div class="jumbotron newsBoard">
 						<div class="well well-sm">Sub-goals</div>
 						<div id="container3" class="well well-sm" style="height:85%;overflow:auto;">
-							 <select id = "fireStation">
-  								<option value="adminfire">Admin Fire</option>
-  								<option value="mesafire">Mesa Fire</option>
-  								<option value="scottfire">Scottsdale Fire</option>
-  								<option value="phxfire">Phoenix Fire</option>
-  								<option value="guadafire">Guada Fire</option>
-							 </select> 
-							 <select id = "resourceOption">
-  								<option value="big_engines">Big Engines</option>
-  								<option value="small_engines">Small Engines</option>
-  								<option value="ladders">Ladders</option>
-  								<option value="helicopters">Helicopters</option>
-  								<option value="bulldozers">Bulldozers</option>
-  								<option value="rescuers">Rescuers</option>
-							 </select> 
-							 <div>
-							 	<button type = "submit" class="btn btn-success" id = "addResource" onclick ="addResource()">Add Resource</button>
-							 </div>					 
+							<ul class="list-group" id="subGoals">
+								<li class="news list-group-item">
+									<p>Alert local people to prepare for evacuation</p>
+								</li>
+								<li class="news list-group-item">
+									<p>Update press and news agencies</p>
+								</li>
+								<li class="news list-group-item">
+									<p>Set up helplines</p>
+								</li>
+								<li class="news list-group-item">
+									<p>Blah</p>
+								</li>
+							</ul>
 						</div>
 					</div>
-				</div> 
+				</div>
 				<div class="col-md-4">
 					<div class="jumbotron newsBoard">
 						<div class="well well-sm">Violated Constraints</div>
@@ -542,7 +408,12 @@
 										</h4>
 									</div>
 								</div>
-
+								<div id="collapse0" class="panel-collapse collapse" style="height: 0px;">
+									<div class="panel-body" style="padding:0;">
+										<div class="alert alert-warning" style="margin:0;"> Only 3 fire engines available, 3/4 deployed
+										</div>
+									</div>
+								</div>
 
 								<div class="panel-heading" style="padding:0;">
 									<div class="alert alert-danger" style="margin:0;">
@@ -580,9 +451,18 @@
 				</div>
 				<div class="col-md-4">
 					<div class="jumbotron newsBoard">
-						<div class="well well-sm">Alerts</div>
+						<div class="well well-sm">Suggested Actions</div>
 						<div id="container3" class="well well-sm" style="height:85%;overflow:auto;">
-							<ul class="list-group" id="alerts">
+							<ul class="list-group" id="suggested_action">
+								<li class="news list-group-item">
+									<p>Call blah <a onclick="formatModal2(this)" data-toggle="modal" data-target="#updatePlan"><span class="glyphicon glyphicon-plus"></span></a> </p>
+								</li>
+								<li class="news list-group-item">
+									<p>Notify St. Peters <a onclick="formatModal2(this)" data-toggle="modal" data-target="#updatePlan"><span class="glyphicon glyphicon-plus"></span></a> </p>
+								</li>
+								<li class="news list-group-item">
+									<p>Call Fire 101 <a onclick="formatModal2(this)" data-toggle="modal" data-target="#updatePlan"><span class="glyphicon glyphicon-plus"></span></a> </p>
+								</li>
 							</ul>
 						</div>
 					</div>
@@ -596,12 +476,10 @@
 					<ul class="list-group" id="planList"></ul>
 				</div>
 				<div id="updateElement" style="height:60px;">
-					<div class="form-group" id="updatePlanText" style="width:60%;">
+					<div class="form-group" id="updatePlanText">
 						<input type="text" placeholder="Enter new action" class="form-control" id="ng">
 					</div>
-					
-					<button type="submit" class="btn btn-success" id ="updatePlanButton" onclick ="updatePlan(document.getElementById('ng').value)">Enter</button>
-					<button type="submit" class="btn btn-success" id="nextPlan" onclick="execute()">Execute</button>					
+					<button type="submit" class="btn btn-success" id="updatePlanButton" onclick="updatePlan(document.getElementById('ng').value)">Enter</button>
 				</div>
 			</div>
 		</div>
@@ -616,39 +494,57 @@
 		</div>
 		<div class="col-md-6" id="r2c2">
 			<div>
-				<table class="table" id="resourceTable">
-				
-				</table>
+				<ul class="list-group" id="pddlList">
+				<!--  	<li class="news list-group-item">
+						<p>4 ambulances available at Ambulance 101</p>
+					</li>
+					<li class="news list-group-item">
+						<p>100 beds available at St. Peters</p>
+					</li>
+					<li class="news list-group-item">
+						<p>4 ambulances available at Ambulance 102</p>
+					</li>
+					<li class="news list-group-item">
+						<p>15 beds free at St. Luke's</p>
+					</li>
+					<li class="news list-group-item">
+						<p>Sale of Firefighting for Dummies has gone up 20%</p>
+					</li>
+					<li class="news list-group-item">
+						<p>Blah</p>
+					</li>
+				-->
+				</ul>
 			</div>
 		</div>
 
 		<div class="col-md-6" id="r2c4">
 			<div id="map">
 			<script type="text/javascript">
-            
-            var locations = [];
-            var map = new google.maps.Map(document.getElementById("map"), {
-                    zoom: 13,
-                    center: new google.maps.LatLng(33.425762,-111.940372),
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-            });
-            
-            var infowindow = new google.maps.InfoWindow();
-            var marker, i;
+                   
+                   var locations = [];
+                   var map = new google.maps.Map(document.getElementById("map"), {
+                           zoom: 13,
+                           center: new google.maps.LatLng(33.425762,-111.940372),
+                           mapTypeId: google.maps.MapTypeId.ROADMAP
+                   });
+                   
+                   var infowindow = new google.maps.InfoWindow();
+                   var marker, i;
 
-            for (i = 0; i < locations.length; i++) {
-             marker = new google.maps.Marker({
-             position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-             map: map
-         });
+                   for (i = 0; i < locations.length; i++) {
+                    marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                    map: map
+                });
 
-            google.maps.event.addListener(marker, 'click', (function(marker, i) {
-            return function() {
-            	infowindow.setContent(locations[i][0]);
-                infowindow.open(map, marker);	
-            }
-            })(marker, i));
-    	}
+                   google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                   return function() {
+                   	infowindow.setContent(locations[i][0]);
+                       infowindow.open(map, marker);	
+                   }
+                   })(marker, i));
+           	}
            	</script>
           	</div>
 		</div>
@@ -669,7 +565,7 @@
 						have access to a multitude of structured, semi-structured and unstructured information sources.
 						The decision makers will increasingly rely on these sources to make data-supported decision making.
 						To ensure that this wealth of information does not turn into an information overload, human
-						decision analysts will requaddResourceire a decision support system that (i) recognizes the plans and goals
+						decision analysts will require a decision support system that (i) recognizes the plans and goals
 						of the decision makers and (ii) proactively supports their information needs through retrieval,
 						rectification, alignment and aggregation of the information. The recognition is needed so as to
 						proactively provide the analysts with valuable information, where the value of a piece of information

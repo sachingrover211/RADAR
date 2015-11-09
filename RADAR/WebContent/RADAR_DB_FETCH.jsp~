@@ -40,7 +40,7 @@ while(rs.next()) {
 }
 
 
-/* Statement st1= con.createStatement();
+Statement st1= con.createStatement();
 ResultSet rs1 = st1.executeQuery("select * from police_stations");
 ResultSetMetaData rsmd1 = rs1.getMetaData();
 int numColumns1 = rsmd1.getColumnCount();
@@ -76,7 +76,7 @@ while(rs2.next()) {
 	    }
 	}
 	json_arr.put(obj);
-}*/
+}
 
 
 out.print(json_arr);
