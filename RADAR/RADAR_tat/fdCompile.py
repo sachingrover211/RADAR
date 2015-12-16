@@ -47,9 +47,13 @@ class fdCompile(CA.Compiler):
 	#The initial task
 	self.cursor.execute('select * from tasks')        
 	initStateList = self.cursor.fetchall()
+	notSmallFire = False
         for predicate in initStateList:
             tempProblem += '(' + predicate[0] + ')\n'
-
+            if (predicate =='small_fire_at byeng'):
+            	notSmallFire = True
+	if(!notSmallFire):
+	    self.cursor.execute('update fire_stations set small_engines = 1')
         tempProblem += '\n(=(total-cost) 0.0)\n\n'
 
 	tempProblem = self.addNotNeeded(tempProblem, self.cursor)
@@ -89,7 +93,8 @@ class fdCompile(CA.Compiler):
         #self.__compileObservations__()
         self.__runPlanner__()
         #self.__extractPlan__()
-
+	if(!notSmallFire):
+	    self.cursor.execute('update fire_stations set small_engines = 0')
 
     def __compileObservations__(self):
         try:
