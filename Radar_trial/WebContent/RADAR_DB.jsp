@@ -29,11 +29,11 @@ ResultSet rs;
 st.executeUpdate("delete from tasks");
 st.executeUpdate("update fire_stations set rescuers=1, helicopters =1, big_engines=1, small_engines=1, bulldozers=1, ladders =1");
 for(int i=0; i<tasks.length; i++){
-	if(tasks[i].equals("Big Fire At Byeng")){
+	if(tasks[i].equals("Stop Big Fire At Byeng")){
 		st.executeUpdate("update fire_stations set rescuers=0, small_engines=0, big_engines =0");
 		int res1=st.executeUpdate("insert into tasks values ('fire_at byeng')");		
 	}	
-	else if (tasks[i].equals("Small Fire At Byeng")){
+	else if (tasks[i].equals("Stop Small Fire At Byeng")){
 		st.executeUpdate("update fire_stations set small_engines=0, big_engines =0, rescuers = 0");		
 		int res1=st.executeUpdate("insert into tasks values ('fire_at byeng'), ('small_fire_at byeng')");
 	}

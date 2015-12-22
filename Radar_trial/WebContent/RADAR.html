@@ -27,7 +27,6 @@
 	function modifyTitle() {
 		$("#twitter-widget-1").contents().find("div div h1 a").html("Shared News Feed");
 	}
-
 	function getText(node) {
 	    if (node.nodeType === 3) return node.data;
 	    var txt = '';
@@ -264,23 +263,29 @@
 			}
 			else{
 				var i;
+				var warned = 0;
+				alert("You cannot execute the plan. Please look at the alert window.");
 				for(i = 1; i < alertId; i++){
 					var alertCont = document.getElementById("alert"+i);
 					var content = document.getElementById("para"+i);
+					if(warned == 0){					
 					if (content.innerHTML.indexOf(resource) > -1){
-						var cont = (content.innerHTML).replace('task', 'action');
-						alert(cont);
+						var cont = (content.innerHTML).replace('task', 'action');						
 						content.innerHTML = '<b>'+cont+'</b>';
 						plan.setAttribute("class", "news list-group-item list-group-item-danger");
+						warned = 1;
 					}
-					else{
-						alert(content.innerHTML);
+					else {
 						if(plan.innerHTML.indexOf("Address")>-1){
 							alert('Task has been successfully completed');
+							var list = document.getElementById("taskList");
+							list.innerHTML='';
+							var plan = document.getElementById("planList");
+							plan.innerHTML='';							
 						}
 						plan.setAttribute("class", "news list-group-item list-group-item-success");
 						currentPlan = currentPlan+1;
-					}
+					}}
 				}
 			}
 		}
@@ -396,7 +401,6 @@
 		$("#updateTask").contents().find("div div h4").html("Update task description?");
 		$("#updateTask").contents().find("div div p").html(elem.parentNode.innerHTML.split("<")[0]);
 	}
-
 	function formatModal2(elem) {
 		$("#updatePlan").contents().find("div div h4").html("Add new action?");
 		$("#updatePlan").contents().find("div div p").html(elem.parentNode.innerHTML.split("<")[0]);
@@ -481,10 +485,10 @@
 			<div id="container3" class="well well-sm" style="overflow:auto;">
 				<ul class="list-group">
 					<li class="news list-group-item">
-						<p>Big Fire At Byeng   <a onclick="updateTask('Big Fire At Byeng')"><span class="glyphicon glyphicon-plus"></span></a> </p>
+						<p>Stop Big Fire At Byeng   <a onclick="updateTask('Stop Big Fire At Byeng')"><span class="glyphicon glyphicon-plus"></span></a> </p>
 					</li>
 					<li class="news list-group-item">
-						<p>Small Fire At Byeng   <a onclick="updateTask('Small Fire At Byeng')"><span class="glyphicon glyphicon-plus"></span></a> </p>
+						<p>Stop Small Fire At Byeng   <a onclick="updateTask('Stop Small Fire At Byeng')"><span class="glyphicon glyphicon-plus"></span></a> </p>
 					</li>
 				</ul>
 			</div>
@@ -552,7 +556,7 @@
 						<div id="container3" class="well well-sm" style="height:85%;overflow:auto;">
 						<div class="panel-group" id="accordion">
 							<div class="panel panel-default">
-								<!-- <div class="panel-heading" style="padding:0;">
+								 <div class="panel-heading" style="padding:0;">
 									<div class="alert alert-danger" style="margin:0;">
 										<h4 class="panel-title">
 											<a data-toggle="collapse" data-parent="#accordion" href="#collapse0" class="collapsed"> Fire engines not deployed
@@ -560,8 +564,6 @@
 										</h4>
 									</div>
 								</div>
-
-
 								<div class="panel-heading" style="padding:0;">
 									<div class="alert alert-danger" style="margin:0;">
 										<h4 class="panel-title">
@@ -576,7 +578,6 @@
 										</div>
 									</div>ze
 								</div>
-
 								<div class="panel-heading" style="padding:0;">
 									<div class="alert alert-danger" style="margin:0;">
 										<h4 class="panel-title">
@@ -619,9 +620,6 @@
 				<ul class="list-group">
 					
 					<li class="news list-group-item">
-						<p>Put up barricades	<a onclick="updatePlan('Put up barricades')"><span class="glyphicon glyphicon-plus"></span></a> </p>
-					</li>
-					<li class="news list-group-item">
 						<p>Dispatch big_engines		<a onclick="updatePlan('Dispatch big_engines')" ><span class="glyphicon glyphicon-plus"></span></a> </p>
 					</li>
 					<li class="news list-group-item">
@@ -631,7 +629,13 @@
 						<p>Send ambulance	<a onclick="updatePlan('Send ambulance')" ><span class="glyphicon glyphicon-plus"></span></a> </p>
 					</li>
 					<li class="news list-group-item">
+						<p>Send Helicopters		<a onclick="updatePlan('Send Helicopters')"><span class="glyphicon glyphicon-plus"></span></a> </p>
+					</li>
+					<li class="news list-group-item">
 						<p>Dispatch small_engines	<a onclick="updatePlan('Dispatch small_engines')" ><span class="glyphicon glyphicon-plus"></span></a> </p>
+					</li>
+					<li class="news list-group-item">
+						<p>Confirm Fire stopped		<a onclick="updatePlan('Confirm Fire stopped')" ><span class="glyphicon glyphicon-plus"></span></a> </p>
 					</li>
 					<li class="news list-group-item">
 						<p>Address media	<a onclick="updatePlan('Address media')"><span class="glyphicon glyphicon-plus"></span></a> </p>
