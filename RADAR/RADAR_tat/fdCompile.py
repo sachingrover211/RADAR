@@ -47,13 +47,11 @@ class fdCompile(CA.Compiler):
 	#The initial task
 	self.cursor.execute('select * from tasks')        
 	initStateList = self.cursor.fetchall()
-	notSmallFire = False
+	self.notSmallFire = True
         for predicate in initStateList:
             tempProblem += '(' + predicate[0] + ')\n'
-            if (predicate =='small_fire_at byeng'):
-            	notSmallFire = True
-	if(!notSmallFire):
-	    self.cursor.execute('update fire_stations set small_engines = 1')
+            if (predicate[0] =="small_fire_at byeng"):
+            	self.notSmallFire = False
         tempProblem += '\n(=(total-cost) 0.0)\n\n'
 
 	tempProblem = self.addNotNeeded(tempProblem, self.cursor)
@@ -93,8 +91,6 @@ class fdCompile(CA.Compiler):
         #self.__compileObservations__()
         self.__runPlanner__()
         #self.__extractPlan__()
-	if(!notSmallFire):
-	    self.cursor.execute('update fire_stations set small_engines = 0')
 
     def __compileObservations__(self):
         try:
@@ -178,13 +174,15 @@ class fdCompile(CA.Compiler):
 	    if("conj" not in landmark and "disj" not in landmark):
 	        land.append(landmark.split(' '))
 	#print resourceIdPair['deployed_engines'][0]
+	print self.notSmallFire
+	print resourceIdPair
 	try:
             for l in land:
 		if l[0] != '':
 		    if( "deployed" in l[2] and "NegatedAtom" not in l[1]):
 			for i in resourceIdPair:
 			    if(i in l[2]):
-				if ((resourceIdPair[i])[1]==True):
+				if ((resourceIdPair[i])[1]== True and self.notSmallFire == False):
 				    self.cursor.execute("insert into disj_landmark values(3, 5)")
 				elif ((resourceIdPair[i])[0]) not in duplicate:
   		                    self.cursor.execute("insert into landmarks values(" + str(resourceIdPair[i][0]) +",'" + l[2] + "')")
@@ -265,8 +263,8 @@ class fdCompile(CA.Compiler):
 	k = 0
 	for i in disjlandmarks:
 	    try:
-		isResource1NotAvail = False
-		isResource2NotAvail = False
+		isResource1NotAvail = True
+		isResource2NotAvail = True
 		self.cursor.execute('select resource_type from predicate_resource where id = '+ str(i[0]))
 		resource1 = (self.cursor.fetchone())[0]
 		self.cursor.execute('select resource_type from predicate_resource where id = '+ str(i[1]))
@@ -275,17 +273,19 @@ class fdCompile(CA.Compiler):
 		resource1List = self.cursor.fetchall()
 		self.cursor.execute('select ' + resource2 + ' from fire_stations')
 		resource2List = self.cursor.fetchall()
+		print resource1List
+		print resource2List
 		for i in resource1List:
-		    if(int((i)[0]) == 1):
+		    if(int((i)[0]) == 0):
 			continue
 		    else:
-			isResource1NotAvail = True
+			isResource1NotAvail = False
 			break
 		for i in resource2List:
-		    if(int((i)[0]) == 1):
+		    if(int((i)[0]) == 0):
 			continue
 		    else:
-			isResource2NotAvail = True
+			isResource2NotAvail = False
 			break
 		if(isResource1NotAvail and isResource2NotAvail):
 		    self.cursor.execute("insert into alert values('You need either "+resource1+" or "+resource2+" before you can complete the task')")
@@ -311,7 +311,6 @@ if __name__ == '__main__':
     fdCompiler = fdCompile(domainFile, problemFile, obsFile)
     fdCompiler.updateFiles()
     fdCompiler.addlandmarks()
-    #fdCompiler.addDisjuctiveLandmark()
     fdCompiler.alert()
     fdCompiler.disj_alert()
     #print '\nFinal Plan >>\n' + fdCompiler.returnPlan()

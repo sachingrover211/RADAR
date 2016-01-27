@@ -259,24 +259,31 @@
 			console.log(resource);
 			if(alertId ==1){
 				plan.setAttribute("class", "news list-group-item list-group-item-success");
+				if(plan.innerHTML.indexOf("Address media") >-1 ){
+					alert('Task has been successfully completed');
+					var list = document.getElementById("taskList");
+					list.innerHTML='';
+					var plan = document.getElementById("planList");
+					plan.innerHTML='';							
+				}
 				currentPlan = currentPlan+1;
 			}
 			else{
 				var i;
-				var warned = 0;
+				var changed = 0;
 				alert("You cannot execute the plan. Please look at the alert window.");
 				for(i = 1; i < alertId; i++){
 					var alertCont = document.getElementById("alert"+i);
 					var content = document.getElementById("para"+i);
-					if(warned == 0){					
 					if (content.innerHTML.indexOf(resource) > -1){
 						var cont = (content.innerHTML).replace('task', 'action');						
 						content.innerHTML = '<b>'+cont+'</b>';
 						plan.setAttribute("class", "news list-group-item list-group-item-danger");
-						warned = 1;
+						changed = 1;
+						break;
 					}
 					else {
-						if(plan.innerHTML.indexOf("Address")>-1){
+						if(plan.innerHTML.indexOf("Address media") >-1 ){
 							alert('Task has been successfully completed');
 							var list = document.getElementById("taskList");
 							list.innerHTML='';
@@ -284,8 +291,10 @@
 							plan.innerHTML='';							
 						}
 						plan.setAttribute("class", "news list-group-item list-group-item-success");
-						currentPlan = currentPlan+1;
-					}}
+					}					
+				}
+				if(changed == 0){
+					currentPlan = currentPlan +1;
 				}
 			}
 		}
