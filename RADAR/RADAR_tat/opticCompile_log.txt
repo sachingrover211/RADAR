@@ -1,0 +1,207 @@
+Number of literals: 218
+Constructing lookup tables: [10%] [20%] [30%] [40%] [50%] [60%] [70%] [80%] [90%] [100%]
+Post filtering unreachable actions:  [10%] [20%] [30%] [40%] [50%] [60%] [70%] [80%] [90%] [100%]
+No semaphore facts found, returning
+(has_police_car_number apachestation) has a finite upper bound: [-inf,6.000]
+(has_police_car_number courtstation) has a finite upper bound: [-inf,6.000]
+(has_police_car_number substation) has a finite upper bound: [-inf,6.000]
+(has_small_engines_number adminfire) has a finite upper bound: [-inf,6.000]
+(has_small_engines_number mesafire) has a finite upper bound: [-inf,6.000]
+(has_small_engines_number scottsfire) has a finite upper bound: [-inf,6.000]
+(has_small_engines_number phxfire) has a finite upper bound: [-inf,6.000]
+(has_small_engines_number guadafire) has a finite upper bound: [-inf,6.000]
+(has_big_engines_number adminfire) has a finite upper bound: [-inf,6.000]
+(has_big_engines_number mesafire) has a finite upper bound: [-inf,6.000]
+(has_big_engines_number scottsfire) has a finite upper bound: [-inf,6.000]
+(has_big_engines_number phxfire) has a finite upper bound: [-inf,6.000]
+(has_big_engines_number guadafire) has a finite upper bound: [-inf,6.000]
+(has_ladders_number adminfire) has a finite upper bound: [-inf,6.000]
+(has_ladders_number mesafire) has a finite upper bound: [-inf,6.000]
+(has_ladders_number scottsfire) has a finite upper bound: [-inf,6.000]
+(has_ladders_number phxfire) has a finite upper bound: [-inf,6.000]
+(has_ladders_number guadafire) has a finite upper bound: [-inf,6.000]
+(has_bulldozers_number adminfire) has a finite upper bound: [-inf,6.000]
+(has_bulldozers_number mesafire) has a finite upper bound: [-inf,6.000]
+(has_bulldozers_number scottsfire) has a finite upper bound: [-inf,6.000]
+(has_bulldozers_number phxfire) has a finite upper bound: [-inf,6.000]
+(has_bulldozers_number guadafire) has a finite upper bound: [-inf,6.000]
+(has_helicopters_number adminfire) has a finite upper bound: [-inf,6.000]
+(has_helicopters_number mesafire) has a finite upper bound: [-inf,6.000]
+(has_helicopters_number scottsfire) has a finite upper bound: [-inf,6.000]
+(has_helicopters_number phxfire) has a finite upper bound: [-inf,6.000]
+(has_helicopters_number guadafire) has a finite upper bound: [-inf,6.000]
+(has_rescuers_number adminfire) has a finite upper bound: [-inf,6.000]
+(has_rescuers_number mesafire) has a finite upper bound: [-inf,6.000]
+(has_rescuers_number scottsfire) has a finite upper bound: [-inf,6.000]
+(has_rescuers_number phxfire) has a finite upper bound: [-inf,6.000]
+(has_rescuers_number guadafire) has a finite upper bound: [-inf,6.000]
+(has_ambulances_number lukes) has a finite upper bound: [-inf,6.000]
+(has_ambulances_number joseph) has a finite upper bound: [-inf,6.000]
+(has_ambulances_number banner) has a finite upper bound: [-inf,6.000]
+Have identified that bigger values of (has_police_car_number apachestation) are preferable
+Have identified that bigger values of (has_police_car_number courtstation) are preferable
+Have identified that bigger values of (has_police_car_number substation) are preferable
+Have identified that bigger values of (has_small_engines_number adminfire) are preferable
+Have identified that bigger values of (has_small_engines_number mesafire) are preferable
+Have identified that bigger values of (has_small_engines_number scottsfire) are preferable
+Have identified that bigger values of (has_small_engines_number phxfire) are preferable
+Have identified that bigger values of (has_small_engines_number guadafire) are preferable
+Have identified that bigger values of (has_big_engines_number adminfire) are preferable
+Have identified that bigger values of (has_big_engines_number mesafire) are preferable
+Have identified that bigger values of (has_big_engines_number scottsfire) are preferable
+Have identified that bigger values of (has_big_engines_number phxfire) are preferable
+Have identified that bigger values of (has_big_engines_number guadafire) are preferable
+Have identified that bigger values of (has_ladders_number adminfire) are preferable
+Have identified that bigger values of (has_ladders_number mesafire) are preferable
+Have identified that bigger values of (has_ladders_number scottsfire) are preferable
+Have identified that bigger values of (has_ladders_number phxfire) are preferable
+Have identified that bigger values of (has_ladders_number guadafire) are preferable
+Have identified that bigger values of (has_bulldozers_number adminfire) are preferable
+Have identified that bigger values of (has_bulldozers_number mesafire) are preferable
+Have identified that bigger values of (has_bulldozers_number scottsfire) are preferable
+Have identified that bigger values of (has_bulldozers_number phxfire) are preferable
+Have identified that bigger values of (has_bulldozers_number guadafire) are preferable
+Have identified that bigger values of (has_helicopters_number adminfire) are preferable
+Have identified that bigger values of (has_helicopters_number mesafire) are preferable
+Have identified that bigger values of (has_helicopters_number scottsfire) are preferable
+Have identified that bigger values of (has_helicopters_number phxfire) are preferable
+Have identified that bigger values of (has_helicopters_number guadafire) are preferable
+Have identified that bigger values of (has_rescuers_number adminfire) are preferable
+Have identified that bigger values of (has_rescuers_number mesafire) are preferable
+Have identified that bigger values of (has_rescuers_number scottsfire) are preferable
+Have identified that bigger values of (has_rescuers_number phxfire) are preferable
+Have identified that bigger values of (has_rescuers_number guadafire) are preferable
+Have identified that bigger values of (has_ambulances_number lukes) are preferable
+Have identified that bigger values of (has_ambulances_number joseph) are preferable
+Have identified that bigger values of (has_ambulances_number banner) are preferable
+Seeing if metric is defined in terms of task vars or a minimal value of makespan
+- Yes it is
+Recognised a monotonic-change-induced limit on -1.000*<special>
+- Must be >=  the metric
+[01;34mFor limits: literal goal index 0, fact (extinguished_fire byeng), is static or a precondition[00m
+[01;31mLooking for achievers for goal index 1, fact (addressed_media) with fID 217[00m
+ (address_media firechief byeng) (address_media medicchief byeng) (address_media policechief byeng) (address_media transportchief byeng) (address_media firechief lake) (address_media medicchief lake) (address_media policechief lake) (address_media transportchief lake) (address_media firechief marketplace) (address_media medicchief marketplace) (address_media policechief marketplace) (address_media transportchief marketplace) (address_media firechief mill) (address_media medicchief mill) (address_media policechief mill) (address_media transportchief mill) (address_media firechief rural) (address_media medicchief rural) (address_media policechief rural) (address_media transportchief rural)
+  Looking at numeric effects of (address_media firechief byeng): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media firechief byeng), of which there are 0
+  Looking at numeric effects of (address_media medicchief byeng): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media medicchief byeng), of which there are 0
+  Looking at numeric effects of (address_media policechief byeng): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media policechief byeng), of which there are 0
+  Looking at numeric effects of (address_media transportchief byeng): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media transportchief byeng), of which there are 0
+  Looking at numeric effects of (address_media firechief lake): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media firechief lake), of which there are 0
+  Looking at numeric effects of (address_media medicchief lake): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media medicchief lake), of which there are 0
+  Looking at numeric effects of (address_media policechief lake): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media policechief lake), of which there are 0
+  Looking at numeric effects of (address_media transportchief lake): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media transportchief lake), of which there are 0
+  Looking at numeric effects of (address_media firechief marketplace): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media firechief marketplace), of which there are 0
+  Looking at numeric effects of (address_media medicchief marketplace): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media medicchief marketplace), of which there are 0
+  Looking at numeric effects of (address_media policechief marketplace): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media policechief marketplace), of which there are 0
+  Looking at numeric effects of (address_media transportchief marketplace): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media transportchief marketplace), of which there are 0
+  Looking at numeric effects of (address_media firechief mill): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media firechief mill), of which there are 0
+  Looking at numeric effects of (address_media medicchief mill): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media medicchief mill), of which there are 0
+  Looking at numeric effects of (address_media policechief mill): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media policechief mill), of which there are 0
+  Looking at numeric effects of (address_media transportchief mill): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media transportchief mill), of which there are 0
+  Looking at numeric effects of (address_media firechief rural): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media firechief rural), of which there are 0
+  Looking at numeric effects of (address_media medicchief rural): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media medicchief rural), of which there are 0
+  Looking at numeric effects of (address_media policechief rural): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media policechief rural), of which there are 0
+  Looking at numeric effects of (address_media transportchief rural): 0 and 0
+  No troublesome numerics - looking at conditional effects on (address_media transportchief rural), of which there are 0
+Action 83 - (deploy_small_engines firechief adminfire byeng) is uninteresting once we have fact (deployed_engines byeng)
+Action 84 - (deploy_small_engines firechief guadafire byeng) is uninteresting once we have fact (deployed_engines byeng)
+Action 85 - (deploy_small_engines firechief mesafire byeng) is uninteresting once we have fact (deployed_engines byeng)
+Action 86 - (deploy_small_engines firechief phxfire byeng) is uninteresting once we have fact (deployed_engines byeng)
+Action 87 - (deploy_small_engines firechief scottsfire byeng) is uninteresting once we have fact (deployed_engines byeng)
+Action 108 - (deploy_big_engines firechief adminfire byeng) is uninteresting once we have fact (deployed_engines byeng)
+Action 109 - (deploy_big_engines firechief guadafire byeng) is uninteresting once we have fact (deployed_engines byeng)
+Action 110 - (deploy_big_engines firechief mesafire byeng) is uninteresting once we have fact (deployed_engines byeng)
+Action 111 - (deploy_big_engines firechief phxfire byeng) is uninteresting once we have fact (deployed_engines byeng)
+Action 112 - (deploy_big_engines firechief scottsfire byeng) is uninteresting once we have fact (deployed_engines byeng)
+Action 158 - (deploy_bulldozers firechief adminfire byeng) is uninteresting once we have fact (deployed_bulldozers byeng)
+Action 159 - (deploy_bulldozers firechief guadafire byeng) is uninteresting once we have fact (deployed_bulldozers byeng)
+Action 160 - (deploy_bulldozers firechief mesafire byeng) is uninteresting once we have fact (deployed_bulldozers byeng)
+Action 161 - (deploy_bulldozers firechief phxfire byeng) is uninteresting once we have fact (deployed_bulldozers byeng)
+Action 162 - (deploy_bulldozers firechief scottsfire byeng) is uninteresting once we have fact (deployed_bulldozers byeng)
+Action 183 - (deploy_helicopters firechief adminfire byeng) is uninteresting once we have fact (deployed_helicopters byeng)
+Action 184 - (deploy_helicopters firechief guadafire byeng) is uninteresting once we have fact (deployed_helicopters byeng)
+Action 185 - (deploy_helicopters firechief mesafire byeng) is uninteresting once we have fact (deployed_helicopters byeng)
+Action 186 - (deploy_helicopters firechief phxfire byeng) is uninteresting once we have fact (deployed_helicopters byeng)
+Action 187 - (deploy_helicopters firechief scottsfire byeng) is uninteresting once we have fact (deployed_helicopters byeng)
+Action 208 - (deploy_rescuers firechief adminfire byeng) is uninteresting once we have fact (deployed_rescuers byeng)
+Action 209 - (deploy_rescuers firechief guadafire byeng) is uninteresting once we have fact (deployed_rescuers byeng)
+Action 210 - (deploy_rescuers firechief mesafire byeng) is uninteresting once we have fact (deployed_rescuers byeng)
+Action 211 - (deploy_rescuers firechief phxfire byeng) is uninteresting once we have fact (deployed_rescuers byeng)
+Action 212 - (deploy_rescuers firechief scottsfire byeng) is uninteresting once we have fact (deployed_rescuers byeng)
+Action 233 - (deploy_ambulances policechief banner byeng) is uninteresting once we have fact (deployed_ambulances byeng)
+Action 234 - (deploy_ambulances policechief joseph byeng) is uninteresting once we have fact (deployed_ambulances byeng)
+Action 235 - (deploy_ambulances policechief lukes byeng) is uninteresting once we have fact (deployed_ambulances byeng)
+Action 263 - (contact_media firechief) is uninteresting once we have fact (media_contacted firechief)
+Action 264 - (contact_media medicchief) is uninteresting once we have fact (media_contacted medicchief)
+Action 265 - (contact_media policechief) is uninteresting once we have fact (media_contacted policechief)
+Action 266 - (contact_media transportchief) is uninteresting once we have fact (media_contacted transportchief)
+Action 367 - (extinguish_big_fire firechief byeng) is uninteresting once we have fact (extinguished_fire byeng)
+Action 375 - (address_media firechief byeng) is uninteresting once we have fact (addressed_media)
+Action 376 - (address_media medicchief byeng) is uninteresting once we have fact (addressed_media)
+Action 377 - (address_media policechief byeng) is uninteresting once we have fact (addressed_media)
+Action 378 - (address_media transportchief byeng) is uninteresting once we have fact (addressed_media)
+Action 379 - (address_media firechief lake) is uninteresting once we have fact (addressed_media)
+Action 380 - (address_media medicchief lake) is uninteresting once we have fact (addressed_media)
+Action 381 - (address_media policechief lake) is uninteresting once we have fact (addressed_media)
+Action 382 - (address_media transportchief lake) is uninteresting once we have fact (addressed_media)
+Action 383 - (address_media firechief marketplace) is uninteresting once we have fact (addressed_media)
+Action 384 - (address_media medicchief marketplace) is uninteresting once we have fact (addressed_media)
+Action 385 - (address_media policechief marketplace) is uninteresting once we have fact (addressed_media)
+Action 386 - (address_media transportchief marketplace) is uninteresting once we have fact (addressed_media)
+Action 387 - (address_media firechief mill) is uninteresting once we have fact (addressed_media)
+Action 388 - (address_media medicchief mill) is uninteresting once we have fact (addressed_media)
+Action 389 - (address_media policechief mill) is uninteresting once we have fact (addressed_media)
+Action 390 - (address_media transportchief mill) is uninteresting once we have fact (addressed_media)
+Action 391 - (address_media firechief rural) is uninteresting once we have fact (addressed_media)
+Action 392 - (address_media medicchief rural) is uninteresting once we have fact (addressed_media)
+Action 393 - (address_media policechief rural) is uninteresting once we have fact (addressed_media)
+Action 394 - (address_media transportchief rural) is uninteresting once we have fact (addressed_media)
+42% of the ground temporal actions in this problem are compression-safe
+Initial heuristic = 8.000, admissible cost estimate 6.004
+b (7.000 | 1.000)b (6.000 | 1.000)b (5.000 | 3.000)b (4.000 | 3.001)b (3.000 | 4.001)b (2.000 | 4.002)(G)
+; LP calculated the cost
+
+; Plan found with metric 6.003
+; Theoretical reachable cost 6.004
+; States evaluated so far: 9
+; States pruned based on pre-heuristic cost lower bound: 0
+; Time 0.04
+0.000: (contact_media firechief)  [1.000]
+0.000: (alert firechief adminfire)  [1.000]
+1.001: (deploy_small_engines firechief adminfire byeng)  [2.000]
+3.002: (extinguish_small_fire firechief byeng)  [1.000]
+4.003: (address_media firechief byeng)  [2.000]
+
+ * All goal deadlines now no later than 6.003
+
+Resorting to best-first search
+Running WA* with W = 5.000, not restarting with goal states
+
+Problem Unsolvable
+;;;; Solution Found
+; States evaluated: 9
+; Cost: 6.003
+; Time 0.04
+0.000: (contact_media firechief)  [1.000]
+0.000: (alert firechief adminfire)  [1.000]
+1.001: (deploy_small_engines firechief adminfire byeng)  [2.000]
+3.002: (extinguish_small_fire firechief byeng)  [1.000]
+4.003: (address_media firechief byeng)  [2.000]
