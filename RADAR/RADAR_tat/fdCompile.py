@@ -4,11 +4,11 @@ import os, sys
 import Compiler as CA
 import MySQLdb
 
-PATH_TO_OBS_COMPILER = '/home/vdondeti/Documents/RADAR/RADAR/RADAR_tat/'
-PATH_TO_FAST_DOWNWARD = '/home/vdondeti/Documents/FD/src/'
+PATH_TO_OBS_COMPILER = '/home/local/ASUAD/ssengu15/Documents/code/RADAR/RADAR/RADAR_tat/'
+PATH_TO_FAST_DOWNWARD = '/home/local/ASUAD/ssengu15/Documents/code/RADAR/FD/src/'
 
 class fdCompile(CA.Compiler):
-    
+
     def __init__(self, domainFile, problemFile, obsFile, flag = False):
         CA.Compiler.__init__(self, domainFile, problemFile, obsFile, flag)
 	self.db = MySQLdb.connect('localhost','root','root','radar')
@@ -25,12 +25,12 @@ class fdCompile(CA.Compiler):
         obsList = self.cursor.fetchall()
         for obs in obsList:
             tempObs += obs[0] + '\n'
-        
+
         with open(self.obsFile,'w') as masterObs:
-            masterObs.write(tempObs) 
+            masterObs.write(tempObs)
 
         tempProblem  = "(define (problem BYENG) (:domain RADAR)\n\n(:objects \n"
-	
+
 	#Objects in problem.pddl
         self.cursor.execute('select * from object_type')
 	object_type = self.cursor.fetchall()
@@ -40,12 +40,12 @@ class fdCompile(CA.Compiler):
             for o in objects:
 		tempProblem += ' ' + o[0]
    	    tempProblem += ' - ' + i[1]	+ '\n'
-	
-	#initialization Statement       
+
+	#initialization Statement
         tempProblem += "\n)\n\n(:init\n"
-	
+
 	#The initial task
-	self.cursor.execute('select * from tasks')        
+	self.cursor.execute('select * from tasks')
 	initStateList = self.cursor.fetchall()
 	self.notSmallFire = True
         for predicate in initStateList:
@@ -58,15 +58,15 @@ class fdCompile(CA.Compiler):
 
 	#The given data or resources
 	query = 'select * from fire_stations_actual'
-  	query_for_predicates = 'select * from predicates_for_fireStation'        
+  	query_for_predicates = 'select * from predicates_for_fireStation'
 	tempProblem = self.resourceAvailable(query, query_for_predicates, self.cursor, tempProblem)
 
 	query = 'select * from hospitals'
-  	query_for_predicates = 'select * from predicates_for_hospital'        
+  	query_for_predicates = 'select * from predicates_for_hospital'
 	tempProblem = self.resourceAvailable(query, query_for_predicates, self.cursor, tempProblem)
 
 	query = 'select * from police_stations'
-  	query_for_predicates = 'select * from predicates_for_policeStation'        
+  	query_for_predicates = 'select * from predicates_for_policeStation'
 	tempProblem = self.resourceAvailable(query, query_for_predicates, self.cursor, tempProblem)
 
 	self.cursor.execute('select * from durations')
@@ -84,7 +84,7 @@ class fdCompile(CA.Compiler):
 	tempProblem = self.addNotNeeded(tempProblem, self.cursor)
         tempProblem += '))\n'
         tempProblem += '\n(:metric minimize (total-cost))\n\n)\n'
-        
+
         with open(self.problemFile,'w') as masterProblem:
             masterProblem.write(tempProblem)
 
@@ -94,12 +94,12 @@ class fdCompile(CA.Compiler):
 
     def __compileObservations__(self):
         try:
-            cmd = PATH_TO_OBS_COMPILER + 'pr2plan -d ' + self.domainFile + ' -i ' + self.problemFile + ' -o ' + self.obsFile + ' > ' + self.logFile 
+            cmd = PATH_TO_OBS_COMPILER + 'pr2plan -d ' + self.domainFile + ' -i ' + self.problemFile + ' -o ' + self.obsFile + ' > ' + self.logFile
             os.system(cmd)
             print 'Observations compiled to grounded domain and problem files...'
         except:
             raise Exception("Compilation aborted with error!")
-            
+
     def __runPlanner__(self):
         try:
             cmd = PATH_TO_FAST_DOWNWARD + 'translate/translate.py '+ self.domainFile +' '+ self.problemFile + ' > ' + self.logFile
@@ -121,7 +121,7 @@ class fdCompile(CA.Compiler):
                 	    if 'explain' not in line:
                 	        self.plan += line.split(')')[0].split('(')[1] + '\n'
                 	else:
-                	    self.plan += '_'.join(line.split('_')[1:-1]) + '\n'                            
+                	    self.plan += '_'.join(line.split('_')[1:-1]) + '\n'
 	                self.plan = self.plan.strip()
         except:
             raise Exception('Plan file not found - looking for <sas_plan> !')
@@ -138,7 +138,7 @@ class fdCompile(CA.Compiler):
 		if(i[j] > 0):
 	    	    tempProblem += '('+ pre[0] +' '+ i[0] +')\n'
         return tempProblem
-	
+
 
     def addNotNeeded(self, tempProblem, cursor):
 	cursor.execute('select object_name from objects where type = 8')
@@ -230,7 +230,7 @@ class fdCompile(CA.Compiler):
 	   self.db.rollback()
 	landmarksFile.close()
 
-	
+
     def alert(self):
 	self.cursor.execute('delete from alert')
 	self.db.commit()
@@ -256,7 +256,7 @@ class fdCompile(CA.Compiler):
 	    except:
 		print 'failed'
 	self.db.commit()
-	
+
     def disj_alert(self):
 	self.cursor.execute('select landmark1, landmark2 from disj_landmark')
  	disjlandmarks = self.cursor.fetchall()
@@ -295,7 +295,7 @@ class fdCompile(CA.Compiler):
 
 
 if __name__ == '__main__':
-    
+
     if len(sys.argv) == 1:
         domainFile  = PATH_TO_OBS_COMPILER+'domain.pddl'
         problemFile = PATH_TO_OBS_COMPILER+'template1.pddl'

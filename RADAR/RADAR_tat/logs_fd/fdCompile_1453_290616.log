@@ -1,0 +1,6 @@
+fdCompile initialized...
+FAST-DOWNWARD called...
+False
+{'helicopters': [1, 0], 'small_engines': [5, 0], 'big_engines': [3, 0], 'rescuers': [4, 0], 'bulldozers': [2, 0], 'deployed_engines': [6, 1]}
+((0L,), (0L,), (0L,), (0L,), (0L,))
+((0L,), (0L,), (0L,), (0L,), (0L,))

@@ -3,13 +3,13 @@ INFO     search input: output
 INFO     search arguments: ['--landmarks', 'lm_exhaust()']
 INFO     search time_limit: None
 INFO     search memory limit: None
-INFO     search executable: /home/vdondeti/Documents/FD/src/search/downward-release
+INFO     search executable: /home/local/ASUAD/ssengu15/Documents/code/RADAR/FD/src/search/downward-release
 reading input... [t=0.00s]
 Simplifying transitions... done!
 done reading input! [t=0.00s]
 packing state variables...done! [t=0.00s]
-Variables: 137
-Facts: 274
+Variables: 136
+Facts: 272
 Bytes per state: 20
 Building successor generator...done! [t=0.00s]
 done initalizing global data [t=0.00s]
@@ -17,240 +17,250 @@ Initializing Exploration...
 Generating landmarks by testing all facts with RPG method
 Removed 0 reasonable or obedient reasonable orders
 Landmarks generation time: 0.01s
-Discovered 144 landmarks, of which 0 are disjunctive and 0 are conjunctive 
+Discovered 149 landmarks, of which 0 are disjunctive and 0 are conjunctive 
 0 edges
 Landmark graph: 
-LM 32 Atom not_needed_diverted_traffic(byeng, byeng) (var211(136)->0)(goal) Achievers (1, 1)
+LM 32 Atom not_needed_diverted_traffic(byeng, byeng) (var211(135)->0)(goal) Achievers (1, 1)
 
-LM 143 NegatedAtom blocked_road(byeng, byeng) (var31(135)->1) Achievers (0, 0)
+LM 148 NegatedAtom blocked_road(byeng, byeng) (var31(134)->1) Achievers (0, 0)
 
-LM 31 Atom not_needed_diverted_traffic(byeng, lake) (var212(134)->0)(goal) Achievers (1, 1)
+LM 31 Atom not_needed_diverted_traffic(byeng, lake) (var212(133)->0)(goal) Achievers (1, 1)
 
-LM 142 NegatedAtom blocked_road(byeng, lake) (var32(133)->1) Achievers (0, 0)
+LM 147 NegatedAtom blocked_road(byeng, lake) (var32(132)->1) Achievers (0, 0)
 
-LM 30 Atom not_needed_diverted_traffic(byeng, marketplace) (var213(132)->0)(goal) Achievers (1, 1)
+LM 30 Atom not_needed_diverted_traffic(byeng, marketplace) (var213(131)->0)(goal) Achievers (1, 1)
 
-LM 141 NegatedAtom blocked_road(byeng, marketplace) (var33(131)->1) Achievers (0, 0)
+LM 146 NegatedAtom blocked_road(byeng, marketplace) (var33(130)->1) Achievers (0, 0)
 
-LM 29 Atom not_needed_diverted_traffic(byeng, mill) (var214(130)->0)(goal) Achievers (1, 1)
+LM 29 Atom not_needed_diverted_traffic(byeng, mill) (var214(129)->0)(goal) Achievers (1, 1)
 
-LM 140 NegatedAtom blocked_road(byeng, mill) (var34(129)->1) Achievers (0, 0)
+LM 145 NegatedAtom blocked_road(byeng, mill) (var34(128)->1) Achievers (0, 0)
 
-LM 28 Atom not_needed_diverted_traffic(byeng, rural) (var215(128)->0)(goal) Achievers (1, 1)
+LM 28 Atom not_needed_diverted_traffic(byeng, rural) (var215(127)->0)(goal) Achievers (1, 1)
 
-LM 139 NegatedAtom blocked_road(byeng, rural) (var35(127)->1) Achievers (0, 0)
+LM 144 NegatedAtom blocked_road(byeng, rural) (var35(126)->1) Achievers (0, 0)
 
-LM 27 Atom not_needed_diverted_traffic(lake, byeng) (var216(126)->0)(goal) Achievers (1, 1)
+LM 27 Atom not_needed_diverted_traffic(lake, byeng) (var216(125)->0)(goal) Achievers (1, 1)
 
-LM 138 NegatedAtom blocked_road(lake, byeng) (var36(125)->1) Achievers (0, 0)
+LM 143 NegatedAtom blocked_road(lake, byeng) (var36(124)->1) Achievers (0, 0)
 
-LM 26 Atom not_needed_diverted_traffic(lake, lake) (var217(124)->0)(goal) Achievers (1, 1)
+LM 26 Atom not_needed_diverted_traffic(lake, lake) (var217(123)->0)(goal) Achievers (1, 1)
 
-LM 137 NegatedAtom blocked_road(lake, lake) (var37(123)->1) Achievers (0, 0)
+LM 142 NegatedAtom blocked_road(lake, lake) (var37(122)->1) Achievers (0, 0)
 
-LM 25 Atom not_needed_diverted_traffic(lake, marketplace) (var218(122)->0)(goal) Achievers (1, 1)
+LM 25 Atom not_needed_diverted_traffic(lake, marketplace) (var218(121)->0)(goal) Achievers (1, 1)
 
-LM 136 NegatedAtom blocked_road(lake, marketplace) (var38(121)->1) Achievers (0, 0)
+LM 141 NegatedAtom blocked_road(lake, marketplace) (var38(120)->1) Achievers (0, 0)
 
-LM 24 Atom not_needed_diverted_traffic(lake, mill) (var219(120)->0)(goal) Achievers (1, 1)
+LM 24 Atom not_needed_diverted_traffic(lake, mill) (var219(119)->0)(goal) Achievers (1, 1)
 
-LM 135 NegatedAtom blocked_road(lake, mill) (var39(119)->1) Achievers (0, 0)
+LM 140 NegatedAtom blocked_road(lake, mill) (var39(118)->1) Achievers (0, 0)
 
-LM 22 Atom not_needed_diverted_traffic(lake, rural) (var220(118)->0)(goal) Achievers (1, 1)
+LM 22 Atom not_needed_diverted_traffic(lake, rural) (var220(117)->0)(goal) Achievers (1, 1)
 
-LM 134 NegatedAtom blocked_road(lake, rural) (var40(117)->1) Achievers (0, 0)
+LM 139 NegatedAtom blocked_road(lake, rural) (var40(116)->1) Achievers (0, 0)
 
-LM 21 Atom not_needed_diverted_traffic(marketplace, byeng) (var221(116)->0)(goal) Achievers (1, 1)
+LM 21 Atom not_needed_diverted_traffic(marketplace, byeng) (var221(115)->0)(goal) Achievers (1, 1)
 
-LM 133 NegatedAtom blocked_road(marketplace, byeng) (var41(115)->1) Achievers (0, 0)
+LM 138 NegatedAtom blocked_road(marketplace, byeng) (var41(114)->1) Achievers (0, 0)
 
-LM 20 Atom not_needed_diverted_traffic(marketplace, lake) (var222(114)->0)(goal) Achievers (1, 1)
+LM 20 Atom not_needed_diverted_traffic(marketplace, lake) (var222(113)->0)(goal) Achievers (1, 1)
 
-LM 132 NegatedAtom blocked_road(marketplace, lake) (var42(113)->1) Achievers (0, 0)
+LM 137 NegatedAtom blocked_road(marketplace, lake) (var42(112)->1) Achievers (0, 0)
 
-LM 19 Atom not_needed_diverted_traffic(marketplace, marketplace) (var223(112)->0)(goal) Achievers (1, 1)
+LM 19 Atom not_needed_diverted_traffic(marketplace, marketplace) (var223(111)->0)(goal) Achievers (1, 1)
 
-LM 131 NegatedAtom blocked_road(marketplace, marketplace) (var43(111)->1) Achievers (0, 0)
+LM 136 NegatedAtom blocked_road(marketplace, marketplace) (var43(110)->1) Achievers (0, 0)
 
-LM 18 Atom not_needed_diverted_traffic(marketplace, mill) (var224(110)->0)(goal) Achievers (1, 1)
+LM 18 Atom not_needed_diverted_traffic(marketplace, mill) (var224(109)->0)(goal) Achievers (1, 1)
 
-LM 130 NegatedAtom blocked_road(marketplace, mill) (var44(109)->1) Achievers (0, 0)
+LM 135 NegatedAtom blocked_road(marketplace, mill) (var44(108)->1) Achievers (0, 0)
 
-LM 17 Atom not_needed_diverted_traffic(marketplace, rural) (var225(108)->0)(goal) Achievers (1, 1)
+LM 17 Atom not_needed_diverted_traffic(marketplace, rural) (var225(107)->0)(goal) Achievers (1, 1)
 
-LM 129 NegatedAtom blocked_road(marketplace, rural) (var45(107)->1) Achievers (0, 0)
+LM 134 NegatedAtom blocked_road(marketplace, rural) (var45(106)->1) Achievers (0, 0)
 
-LM 16 Atom not_needed_diverted_traffic(mill, byeng) (var226(106)->0)(goal) Achievers (1, 1)
+LM 16 Atom not_needed_diverted_traffic(mill, byeng) (var226(105)->0)(goal) Achievers (1, 1)
 
-LM 128 NegatedAtom blocked_road(mill, byeng) (var46(105)->1) Achievers (0, 0)
+LM 133 NegatedAtom blocked_road(mill, byeng) (var46(104)->1) Achievers (0, 0)
 
-LM 15 Atom not_needed_diverted_traffic(mill, lake) (var227(104)->0)(goal) Achievers (1, 1)
+LM 15 Atom not_needed_diverted_traffic(mill, lake) (var227(103)->0)(goal) Achievers (1, 1)
 
-LM 127 NegatedAtom blocked_road(mill, lake) (var47(103)->1) Achievers (0, 0)
+LM 132 NegatedAtom blocked_road(mill, lake) (var47(102)->1) Achievers (0, 0)
 
-LM 14 Atom not_needed_diverted_traffic(mill, marketplace) (var228(102)->0)(goal) Achievers (1, 1)
+LM 14 Atom not_needed_diverted_traffic(mill, marketplace) (var228(101)->0)(goal) Achievers (1, 1)
 
-LM 126 NegatedAtom blocked_road(mill, marketplace) (var48(101)->1) Achievers (0, 0)
+LM 131 NegatedAtom blocked_road(mill, marketplace) (var48(100)->1) Achievers (0, 0)
 
-LM 13 Atom not_needed_diverted_traffic(mill, mill) (var229(100)->0)(goal) Achievers (1, 1)
+LM 13 Atom not_needed_diverted_traffic(mill, mill) (var229(99)->0)(goal) Achievers (1, 1)
 
-LM 125 NegatedAtom blocked_road(mill, mill) (var49(99)->1) Achievers (0, 0)
+LM 130 NegatedAtom blocked_road(mill, mill) (var49(98)->1) Achievers (0, 0)
 
-LM 12 Atom not_needed_diverted_traffic(mill, rural) (var230(98)->0)(goal) Achievers (1, 1)
+LM 12 Atom not_needed_diverted_traffic(mill, rural) (var230(97)->0)(goal) Achievers (1, 1)
 
-LM 124 NegatedAtom blocked_road(mill, rural) (var50(97)->1) Achievers (0, 0)
+LM 129 NegatedAtom blocked_road(mill, rural) (var50(96)->1) Achievers (0, 0)
 
-LM 11 Atom not_needed_diverted_traffic(rural, byeng) (var231(96)->0)(goal) Achievers (1, 1)
+LM 11 Atom not_needed_diverted_traffic(rural, byeng) (var231(95)->0)(goal) Achievers (1, 1)
 
-LM 123 NegatedAtom blocked_road(rural, byeng) (var51(95)->1) Achievers (0, 0)
+LM 128 NegatedAtom blocked_road(rural, byeng) (var51(94)->1) Achievers (0, 0)
 
-LM 10 Atom not_needed_diverted_traffic(rural, lake) (var232(94)->0)(goal) Achievers (1, 1)
+LM 10 Atom not_needed_diverted_traffic(rural, lake) (var232(93)->0)(goal) Achievers (1, 1)
 
-LM 122 NegatedAtom blocked_road(rural, lake) (var52(93)->1) Achievers (0, 0)
+LM 127 NegatedAtom blocked_road(rural, lake) (var52(92)->1) Achievers (0, 0)
 
-LM 9 Atom not_needed_diverted_traffic(rural, marketplace) (var233(92)->0)(goal) Achievers (1, 1)
+LM 9 Atom not_needed_diverted_traffic(rural, marketplace) (var233(91)->0)(goal) Achievers (1, 1)
 
-LM 121 NegatedAtom blocked_road(rural, marketplace) (var53(91)->1) Achievers (0, 0)
+LM 126 NegatedAtom blocked_road(rural, marketplace) (var53(90)->1) Achievers (0, 0)
 
-LM 8 Atom not_needed_diverted_traffic(rural, mill) (var234(90)->0)(goal) Achievers (1, 1)
+LM 8 Atom not_needed_diverted_traffic(rural, mill) (var234(89)->0)(goal) Achievers (1, 1)
 
-LM 120 NegatedAtom blocked_road(rural, mill) (var54(89)->1) Achievers (0, 0)
+LM 125 NegatedAtom blocked_road(rural, mill) (var54(88)->1) Achievers (0, 0)
 
-LM 7 Atom not_needed_diverted_traffic(rural, rural) (var235(88)->0)(goal) Achievers (1, 1)
+LM 7 Atom not_needed_diverted_traffic(rural, rural) (var235(87)->0)(goal) Achievers (1, 1)
 
-LM 118 NegatedAtom blocked_road(rural, rural) (var55(87)->1) Achievers (0, 0)
+LM 124 NegatedAtom blocked_road(rural, rural) (var55(86)->1) Achievers (0, 0)
 
-LM 6 Atom not_needed_active_local_alert(transportchief) (var203(86)->0)(goal) Achievers (1, 1)
+LM 6 Atom not_needed_active_local_alert(transportchief) (var203(85)->0)(goal) Achievers (1, 1)
 
-LM 119 NegatedAtom active_local_alert(transportchief) (var7(85)->1) Achievers (0, 0)
+LM 123 NegatedAtom active_local_alert(transportchief) (var7(84)->1) Achievers (0, 0)
 
-LM 115 NegatedAtom addressed_media() (var8(84)->1) Achievers (0, 0)
+LM 122 NegatedAtom addressed_media() (var8(83)->1) Achievers (0, 0)
 
-LM 5 Atom addressed_media() (var8(84)->0)(goal) Achievers (4, 4)
+LM 5 Atom addressed_media() (var8(83)->0)(goal) Achievers (4, 4)
 
-LM 117 NegatedAtom not_needed_address_media() (var204(83)->1) Achievers (3, 2)
+LM 121 NegatedAtom not_needed_address_media() (var204(82)->1) Achievers (2, 1)
 
-LM 4 Atom not_needed_address_media() (var204(83)->0)(goal) Achievers (4, 4)
+LM 4 Atom not_needed_address_media() (var204(82)->0)(goal) Achievers (4, 4)
 
-LM 116 NegatedAtom needed_address_media() (var170(82)->1) Achievers (4, 4)
+LM 119 NegatedAtom needed_address_media() (var170(81)->1) Achievers (4, 4)
 
-LM 114 Atom needed_address_media() (var170(82)->0) Achievers (3, 2)
+LM 120 Atom needed_address_media() (var170(81)->0) Achievers (2, 1)
 
-LM 3 Atom not_needed_attend_casualties(byeng) (var205(81)->0)(goal) Achievers (1, 1)
+LM 118 NegatedAtom not_needed_attend_casualties(byeng) (var205(80)->1) Achievers (1, 1)
 
-LM 112 NegatedAtom needed_attend_casualties(byeng) (var171(80)->1) Achievers (1, 1)
+LM 3 Atom not_needed_attend_casualties(byeng) (var205(80)->0)(goal) Achievers (1, 1)
 
-LM 113 NegatedAtom deployed_bulldozers(byeng) (var66(79)->1) Achievers (0, 0)
+LM 117 NegatedAtom needed_attend_casualties(byeng) (var171(79)->1) Achievers (1, 1)
 
-LM 106 NegatedAtom extinguished_fire(byeng) (var126(78)->1) Achievers (0, 0)
+LM 114 Atom needed_attend_casualties(byeng) (var171(79)->0) Achievers (1, 1)
 
-LM 2 Atom extinguished_fire(byeng) (var126(78)->0)(goal) Achievers (2, 2)
+LM 113 NegatedAtom deployed_bulldozers(byeng) (var66(78)->1) Achievers (0, 0)
 
-LM 111 NegatedAtom not_needed_search_casualties(byeng) (var236(77)->1) Achievers (2, 2)
+LM 116 Atom deployed_bulldozers(byeng) (var66(78)->0) Achievers (5, 5)
 
-LM 1 Atom not_needed_search_casualties(byeng) (var236(77)->0)(goal) Achievers (0, 0)
+LM 2 Atom not_needed_active_local_alert(firechief) (var202(77)->0)(goal) Achievers (1, 1)
 
-LM 110 Atom small_fire_at(byeng) (var259(76)->0) Achievers (0, 0)
+LM 115 NegatedAtom deployed_engines(byeng) (var71(76)->1) Achievers (0, 0)
 
-LM 109 Atom needed_search_casualties(byeng) (var127(75)->1) Achievers (2, 2)
+LM 110 Atom deployed_engines(byeng) (var71(76)->0) Achievers (10, 10)
 
-LM 108 Atom fire_at(byeng) (var127(75)->0) Achievers (0, 0)
+LM 109 NegatedAtom deployed_engines(lake) (var72(75)->1) Achievers (0, 0)
 
-LM 0 Atom not_needed_active_local_alert(firechief) (var202(74)->0)(goal) Achievers (1, 1)
+LM 112 NegatedAtom deployed_engines(marketplace) (var73(74)->1) Achievers (0, 0)
 
-LM 107 NegatedAtom deployed_engines(byeng) (var71(73)->1) Achievers (0, 0)
+LM 111 NegatedAtom deployed_engines(mill) (var74(73)->1) Achievers (0, 0)
 
-LM 103 Atom deployed_engines(byeng) (var71(73)->0) Achievers (10, 10)
+LM 105 NegatedAtom deployed_engines(rural) (var75(72)->1) Achievers (0, 0)
 
-LM 102 NegatedAtom deployed_engines(lake) (var72(72)->1) Achievers (0, 0)
+LM 108 NegatedAtom deployed_helicopters(byeng) (var76(71)->1) Achievers (0, 0)
 
-LM 105 NegatedAtom deployed_engines(marketplace) (var73(71)->1) Achievers (0, 0)
+LM 104 Atom deployed_helicopters(byeng) (var76(71)->0) Achievers (5, 5)
 
-LM 104 NegatedAtom deployed_engines(mill) (var74(70)->1) Achievers (0, 0)
+LM 103 NegatedAtom deployed_rescuers(byeng) (var91(70)->1) Achievers (0, 0)
 
-LM 100 NegatedAtom deployed_engines(rural) (var75(69)->1) Achievers (0, 0)
+LM 107 Atom deployed_rescuers(byeng) (var91(70)->0) Achievers (5, 5)
 
-LM 101 NegatedAtom deployed_helicopters(byeng) (var76(68)->1) Achievers (0, 0)
+LM 106 NegatedAtom extinguished_fire(byeng) (var126(69)->1) Achievers (0, 0)
 
-LM 97 NegatedAtom deployed_rescuers(byeng) (var91(67)->1) Achievers (0, 0)
+LM 1 Atom extinguished_fire(byeng) (var126(69)->0)(goal) Achievers (1, 1)
+
+LM 102 NegatedAtom not_needed_search_casualties(byeng) (var236(68)->1) Achievers (1, 1)
+
+LM 0 Atom not_needed_search_casualties(byeng) (var236(68)->0)(goal) Achievers (0, 0)
+
+LM 101 Atom needed_search_casualties(byeng) (var127(67)->1) Achievers (1, 1)
+
+LM 100 Atom fire_at(byeng) (var127(67)->0) Achievers (0, 0)
 
 LM 99 Atom has_ladders_number(scottsfire) (var150(66)->0) Achievers (0, 0)
 
 LM 98 NegatedAtom alerted(scottsfire) (var23(65)->1) Achievers (30, 30)
 
-LM 96 Atom has_ladders_number(phxfire) (var149(64)->0) Achievers (0, 0)
+LM 97 Atom has_ladders_number(phxfire) (var149(64)->0) Achievers (0, 0)
 
-LM 95 NegatedAtom alerted(phxfire) (var21(63)->1) Achievers (30, 30)
+LM 96 NegatedAtom alerted(phxfire) (var21(63)->1) Achievers (30, 30)
 
-LM 94 Atom has_ladders_number(mesafire) (var148(62)->0) Achievers (0, 0)
+LM 95 Atom has_ladders_number(mesafire) (var148(62)->0) Achievers (0, 0)
 
-LM 93 NegatedAtom alerted(mesafire) (var19(61)->1) Achievers (30, 30)
+LM 94 NegatedAtom alerted(mesafire) (var19(61)->1) Achievers (30, 30)
 
-LM 92 Atom has_ladders_number(guadafire) (var147(60)->0) Achievers (0, 0)
+LM 93 Atom has_ladders_number(guadafire) (var147(60)->0) Achievers (0, 0)
 
-LM 91 NegatedAtom alerted(guadafire) (var14(59)->1) Achievers (30, 30)
+LM 92 NegatedAtom alerted(guadafire) (var14(59)->1) Achievers (30, 30)
 
-LM 90 Atom has_ladders_number(adminfire) (var146(58)->0) Achievers (0, 0)
+LM 91 Atom has_ladders_number(adminfire) (var146(58)->0) Achievers (0, 0)
 
-LM 89 NegatedAtom alerted(adminfire) (var9(57)->1) Achievers (30, 30)
+LM 90 NegatedAtom alerted(adminfire) (var9(57)->1) Achievers (30, 30)
 
-LM 86 NegatedAtom deployed_big_engines(rural) (var65(56)->1) Achievers (0, 0)
+LM 87 NegatedAtom deployed_big_engines(rural) (var65(56)->1) Achievers (0, 0)
 
-LM 88 NegatedAtom deployed_big_engines(mill) (var64(55)->1) Achievers (0, 0)
+LM 89 NegatedAtom deployed_big_engines(mill) (var64(55)->1) Achievers (0, 0)
 
-LM 84 NegatedAtom deployed_big_engines(marketplace) (var63(54)->1) Achievers (0, 0)
+LM 88 NegatedAtom deployed_big_engines(marketplace) (var63(54)->1) Achievers (0, 0)
 
-LM 87 NegatedAtom deployed_big_engines(lake) (var62(53)->1) Achievers (0, 0)
+LM 85 NegatedAtom deployed_big_engines(lake) (var62(53)->1) Achievers (0, 0)
 
-LM 85 NegatedAtom deployed_big_engines(byeng) (var61(52)->1) Achievers (0, 0)
+LM 86 NegatedAtom deployed_big_engines(byeng) (var61(52)->1) Achievers (0, 0)
 
-LM 83 Atom has_small_engines_number(adminfire) (var159(51)->0) Achievers (0, 0)
+LM 84 Atom deployed_big_engines(byeng) (var61(52)->0) Achievers (5, 5)
 
-LM 81 Atom has_rescuers_number(adminfire) (var154(50)->0) Achievers (0, 0)
+LM 82 Atom has_small_engines_number(adminfire) (var159(51)->0) Achievers (0, 0)
 
-LM 82 Atom has_helicopters_number(adminfire) (var141(49)->0) Achievers (0, 0)
+LM 83 Atom has_rescuers_number(adminfire) (var154(50)->0) Achievers (0, 0)
 
-LM 80 Atom has_bulldozers_number(adminfire) (var136(48)->0) Achievers (0, 0)
+LM 81 Atom has_helicopters_number(adminfire) (var141(49)->0) Achievers (0, 0)
 
-LM 78 Atom has_big_engines_number(adminfire) (var131(47)->0) Achievers (0, 0)
+LM 79 Atom has_bulldozers_number(adminfire) (var136(48)->0) Achievers (0, 0)
 
-LM 79 Atom has_small_engines_number(guadafire) (var160(46)->0) Achievers (0, 0)
+LM 80 Atom has_big_engines_number(adminfire) (var131(47)->0) Achievers (0, 0)
 
-LM 77 Atom has_rescuers_number(guadafire) (var155(45)->0) Achievers (0, 0)
+LM 78 Atom has_small_engines_number(guadafire) (var160(46)->0) Achievers (0, 0)
 
-LM 75 Atom has_helicopters_number(guadafire) (var142(44)->0) Achievers (0, 0)
+LM 76 Atom has_rescuers_number(guadafire) (var155(45)->0) Achievers (0, 0)
 
-LM 76 Atom has_bulldozers_number(guadafire) (var137(43)->0) Achievers (0, 0)
+LM 77 Atom has_helicopters_number(guadafire) (var142(44)->0) Achievers (0, 0)
 
-LM 74 Atom has_big_engines_number(guadafire) (var132(42)->0) Achievers (0, 0)
+LM 75 Atom has_bulldozers_number(guadafire) (var137(43)->0) Achievers (0, 0)
 
-LM 72 Atom has_small_engines_number(mesafire) (var161(41)->0) Achievers (0, 0)
+LM 73 Atom has_big_engines_number(guadafire) (var132(42)->0) Achievers (0, 0)
 
-LM 73 Atom has_rescuers_number(mesafire) (var156(40)->0) Achievers (0, 0)
+LM 74 Atom has_small_engines_number(mesafire) (var161(41)->0) Achievers (0, 0)
 
-LM 71 Atom has_helicopters_number(mesafire) (var143(39)->0) Achievers (0, 0)
+LM 72 Atom has_rescuers_number(mesafire) (var156(40)->0) Achievers (0, 0)
 
-LM 69 Atom has_bulldozers_number(mesafire) (var138(38)->0) Achievers (0, 0)
+LM 65 Atom has_helicopters_number(mesafire) (var143(39)->0) Achievers (0, 0)
+
+LM 71 Atom has_bulldozers_number(mesafire) (var138(38)->0) Achievers (0, 0)
 
 LM 70 Atom has_big_engines_number(mesafire) (var133(37)->0) Achievers (0, 0)
 
-LM 68 Atom has_small_engines_number(phxfire) (var162(36)->0) Achievers (0, 0)
+LM 69 Atom has_small_engines_number(phxfire) (var162(36)->0) Achievers (0, 0)
 
-LM 66 Atom has_rescuers_number(phxfire) (var157(35)->0) Achievers (0, 0)
+LM 68 Atom has_rescuers_number(phxfire) (var157(35)->0) Achievers (0, 0)
 
 LM 67 Atom has_helicopters_number(phxfire) (var144(34)->0) Achievers (0, 0)
 
-LM 65 Atom has_bulldozers_number(phxfire) (var139(33)->0) Achievers (0, 0)
+LM 66 Atom has_bulldozers_number(phxfire) (var139(33)->0) Achievers (0, 0)
 
-LM 60 Atom has_big_engines_number(phxfire) (var134(32)->0) Achievers (0, 0)
+LM 63 Atom has_big_engines_number(phxfire) (var134(32)->0) Achievers (0, 0)
 
 LM 64 Atom has_small_engines_number(scottsfire) (var163(31)->0) Achievers (0, 0)
 
-LM 63 Atom has_rescuers_number(scottsfire) (var158(30)->0) Achievers (0, 0)
+LM 61 Atom has_rescuers_number(scottsfire) (var158(30)->0) Achievers (0, 0)
 
-LM 62 Atom has_helicopters_number(scottsfire) (var145(29)->0) Achievers (0, 0)
+LM 60 Atom has_helicopters_number(scottsfire) (var145(29)->0) Achievers (0, 0)
 
-LM 61 Atom has_bulldozers_number(scottsfire) (var140(28)->0) Achievers (0, 0)
+LM 62 Atom has_bulldozers_number(scottsfire) (var140(28)->0) Achievers (0, 0)
 
 LM 58 Atom has_big_engines_number(scottsfire) (var135(27)->0) Achievers (0, 0)
 
@@ -258,43 +268,43 @@ LM 57 NegatedAtom deployed_police_cars(byeng) (var86(26)->1) Achievers (0, 0)
 
 LM 59 NegatedAtom deployed_police_cars(lake) (var87(25)->1) Achievers (0, 0)
 
-LM 52 NegatedAtom deployed_police_cars(marketplace) (var88(24)->1) Achievers (0, 0)
+LM 56 NegatedAtom deployed_police_cars(marketplace) (var88(24)->1) Achievers (0, 0)
 
 LM 51 NegatedAtom deployed_police_cars(mill) (var89(23)->1) Achievers (0, 0)
 
-LM 56 NegatedAtom deployed_police_cars(rural) (var90(22)->1) Achievers (0, 0)
+LM 55 NegatedAtom deployed_police_cars(rural) (var90(22)->1) Achievers (0, 0)
 
-LM 55 NegatedAtom positioned_policemen(byeng) (var237(21)->1) Achievers (0, 0)
+LM 54 NegatedAtom positioned_policemen(byeng) (var237(21)->1) Achievers (0, 0)
 
-LM 54 NegatedAtom positioned_policemen(lake) (var238(20)->1) Achievers (0, 0)
+LM 53 NegatedAtom positioned_policemen(lake) (var238(20)->1) Achievers (0, 0)
 
-LM 53 NegatedAtom positioned_policemen(marketplace) (var239(19)->1) Achievers (0, 0)
+LM 52 NegatedAtom positioned_policemen(marketplace) (var239(19)->1) Achievers (0, 0)
 
 LM 50 NegatedAtom positioned_policemen(mill) (var240(18)->1) Achievers (0, 0)
 
-LM 47 NegatedAtom positioned_policemen(rural) (var241(17)->1) Achievers (0, 0)
+LM 49 NegatedAtom positioned_policemen(rural) (var241(17)->1) Achievers (0, 0)
 
-LM 23 Atom has_police_car_number(apachestation) (var151(16)->0) Achievers (0, 0)
+LM 45 Atom has_police_car_number(apachestation) (var151(16)->0) Achievers (0, 0)
 
-LM 48 NegatedAtom alerted(apachestation) (var10(15)->1) Achievers (10, 10)
+LM 23 NegatedAtom alerted(apachestation) (var10(15)->1) Achievers (10, 10)
 
-LM 49 NegatedAtom deployed_ambulances(byeng) (var56(14)->1) Achievers (0, 0)
+LM 48 NegatedAtom deployed_ambulances(byeng) (var56(14)->1) Achievers (0, 0)
 
-LM 46 Atom has_ambulances_number(banner) (var128(13)->0) Achievers (0, 0)
+LM 47 Atom has_ambulances_number(banner) (var128(13)->0) Achievers (0, 0)
 
-LM 45 NegatedAtom alerted(banner) (var11(12)->1) Achievers (5, 5)
+LM 46 NegatedAtom alerted(banner) (var11(12)->1) Achievers (5, 5)
 
-LM 41 Atom has_police_car_number(courtstation) (var152(11)->0) Achievers (0, 0)
+LM 36 Atom has_police_car_number(courtstation) (var152(11)->0) Achievers (0, 0)
 
-LM 44 NegatedAtom alerted(courtstation) (var13(10)->1) Achievers (10, 10)
+LM 40 NegatedAtom alerted(courtstation) (var13(10)->1) Achievers (10, 10)
 
-LM 43 Atom has_ambulances_number(joseph) (var129(9)->0) Achievers (0, 0)
+LM 44 Atom has_ambulances_number(joseph) (var129(9)->0) Achievers (0, 0)
 
-LM 42 NegatedAtom alerted(joseph) (var15(8)->1) Achievers (5, 5)
+LM 43 NegatedAtom alerted(joseph) (var15(8)->1) Achievers (5, 5)
 
-LM 36 Atom has_ambulances_number(lukes) (var130(7)->0) Achievers (0, 0)
+LM 42 Atom has_ambulances_number(lukes) (var130(7)->0) Achievers (0, 0)
 
-LM 40 NegatedAtom alerted(lukes) (var17(6)->1) Achievers (5, 5)
+LM 41 NegatedAtom alerted(lukes) (var17(6)->1) Achievers (5, 5)
 
 LM 38 Atom has_police_car_number(substation) (var153(5)->0) Achievers (0, 0)
 
@@ -309,6 +319,6 @@ LM 39 NegatedAtom media_contacted(policechief) (var166(1)->1) Achievers (0, 0)
 LM 33 NegatedAtom media_contacted(transportchief) (var167(0)->1) Achievers (0, 0)
 
 Landmark graph end.
-Peak memory: 3452 KB
+Peak memory: 3464 KB
 caught signal 11 -- exiting
-Command '['/home/vdondeti/Documents/FD/src/search/downward-release', '--landmarks', 'lm_exhaust()', '--internal-plan-file', 'sas_plan']' returned non-zero exit status -11
+Command '['/home/local/ASUAD/ssengu15/Documents/code/RADAR/FD/src/search/downward-release', '--landmarks', 'lm_exhaust()', '--internal-plan-file', 'sas_plan']' returned non-zero exit status -11
