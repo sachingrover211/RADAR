@@ -4,7 +4,7 @@ import os, sys
 import Compiler as CA
 import MySQLdb
 
-PATH_TO_OBS_COMPILER = '/home/local/ASUAD/ssengu15/Documents/code/RADAR/RADAR/RADAR_tat/'
+PATH_TO_OBS_COMPILER = '/home/local/ASUAD/ssengu15/Documents/code/RADAR/src/'
 PATH_TO_FAST_DOWNWARD = '/home/local/ASUAD/ssengu15/Documents/code/RADAR/FD/src/'
 
 class fdCompile(CA.Compiler):

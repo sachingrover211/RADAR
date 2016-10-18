@@ -20,14 +20,14 @@
 //Process pr = run.exec("/home/vmeduri/Desktop/FastDownward/src/test_js.sh");
 
 ProcessBuilder pb = new ProcessBuilder(
-	      "/home/vmeduri/Desktop/radar/RADAR_tat/test_js_new.sh");
+	      "/home/local/ASUAD/ssengu15/Documents/code/RADAR/src/test_js_new.sh");
 	    Process p = pb.start();     // Start the process.
 	    p.waitFor(); 
 
 Class.forName("com.mysql.jdbc.Driver"); 
 java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/radar","root","root");
 Statement st= con.createStatement();
-ResultSet rs = st.executeQuery("select * from alerts");
+ResultSet rs = st.executeQuery("select * from alert");
 
 JSONArray json_arr = new JSONArray();
 ResultSetMetaData rsmd = rs.getMetaData();
